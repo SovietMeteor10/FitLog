@@ -12,11 +12,9 @@ def register():
     username = data.get('username')
     email = data.get('email')
     password = data.get('password')
-
     if User.query.filter_by(email=email).first():
         return jsonify({
             'message': 'Email already exists'}), 400
-    
     user = User(username=username, email=email)
     user.set_password(password)
     db.session.add(user)
@@ -35,7 +33,6 @@ def login():
         access_token = create_access_token(
             identity=user.id)
         return jsonify({'access_token': access_token}), 200
-    
     return jsonify({'message': 'Invalid email or password'}), 401
 
 @auth_blueprint.route('/logout', methods=['POST'])
