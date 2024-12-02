@@ -1,4 +1,4 @@
-from app import db #, bcrypt, jwt
+from app import db  # , bcrypt, jwt
 from flask_bcrypt import generate_password_hash, check_password_hash
 
 
