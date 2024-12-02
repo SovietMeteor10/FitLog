@@ -1,7 +1,8 @@
 """from flask import Blueprint, request, jsonify
 from app import db, bcrypt, jwt  # Now you can safely import these
 from models import User
-from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+from flask_jwt_extended import create_access_token,
+ get_jwt_identity, jwt_required
 
 auth_blueprint = Blueprint('auth', __name__)
 
@@ -13,7 +14,8 @@ def register():
     password = data.get('password')
 
     if User.query.filter_by(email=email).first():
-        return jsonify({'message': 'Email already exists'}), 400
+        return jsonify({
+            'message': 'Email already exists'}), 400
     
     user = User(username=username, email=email)
     user.set_password(password)
@@ -30,7 +32,8 @@ def login():
 
     user = User.query.filter_by(email=email).first()
     if user and user.check_password(password):
-        access_token = create_access_token(identity=user.id)
+        access_token = create_access_token(
+            identity=user.id)
         return jsonify({'access_token': access_token}), 200
     
     return jsonify({'message': 'Invalid email or password'}), 401

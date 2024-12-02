@@ -10,7 +10,6 @@ jwt = JWTManager()
 
 def create_app(config_filename=None):
     app = Flask(__name__)
-
     # If you have a config.py, load it
     if config_filename:
         app.config.from_pyfile(config_filename)
@@ -20,7 +19,6 @@ def create_app(config_filename=None):
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
         app.config['SECRET_KEY'] = 'your_default_secret_key'
         app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'
-    
     # Initialize other extensions
     db.init_app(app)
     bcrypt.init_app(app)
