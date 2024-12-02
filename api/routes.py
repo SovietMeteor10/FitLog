@@ -1,8 +1,9 @@
 from flask import Blueprint, request, jsonify
-from app import db, bcrypt, jwt  # Now you can safely import these
+from app import db #, bcrypt, jwt  # Now you can safely import these
 from app.models import User
 from .get_exercise import fetch_exercises
-from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity, jwt_required
 
 auth_blueprint = Blueprint("auth", __name__)
 api_bp = Blueprint("api", __name__)

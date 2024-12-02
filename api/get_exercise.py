@@ -3,7 +3,9 @@ from app.config import Config
 
 # Prepare headers with the API key
 headers = {
-    "Authorization": f"Token {Config.API_KEY}",  # Adjust based on API docs; might be "Token" instead of "Bearer"
+    # Adjust based on API docs; might be "Token" instead of "Bearer"
+    "Authorization": f"Token {Config.API_KEY}",  
+    
 }
 
 
@@ -44,7 +46,8 @@ def fetch_exercises():
         else:
             # Handle non-200 responses
             return {
-                "error": f"Failed to fetch exercises. Status code: {response.status_code}"
+                "error": f"Failed to fetch exercises. Status code: {
+                    response.status_code}"
             }
 
     except requests.RequestException as e:
