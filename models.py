@@ -1,4 +1,4 @@
-from app import db, bcrypt, jwt
+"""from app import db, bcrypt, jwt
 from flask_bcrypt import generate_password_hash, check_password_hash
 
 class User(db.Model):
@@ -13,4 +13,4 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
     
-    
+    """

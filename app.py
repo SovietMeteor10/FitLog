@@ -1,4 +1,4 @@
-from flask import Flask
+"""from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
@@ -26,4 +26,19 @@ def create_app(config_filename=None):
     bcrypt.init_app(app)
     jwt.init_app(app)
 
-    return app
+    return app"""
+
+#Test code
+
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
