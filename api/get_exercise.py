@@ -6,6 +6,8 @@ headers = {
     # Adjust based on API docs; might be "Token" instead of "Bearer"
     "Authorization": f"Token {Config.API_KEY}",
 }
+
+
 def fetch_exercises():
     try:
         # Make the API request
