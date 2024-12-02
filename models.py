@@ -1,5 +1,5 @@
 from app import db, bcrypt, jwt
-from flash_bcrypt import generate_password_hash, check_password_hash
+from flask_bcrypt import generate_password_hash, check_password_hash
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

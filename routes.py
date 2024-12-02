@@ -1,6 +1,5 @@
-# Authentication Endpoints
 from flask import Blueprint, request, jsonify
-from app import db, bcrypt, jwt
+from app import db, bcrypt, jwt  # Now you can safely import these
 from models import User
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 
@@ -44,4 +43,4 @@ def logout():
 @jwt_required()
 def protected():
     current_user = get_jwt_identity()
-    return jsonify({'message': 'Hello {}'.format(current_user)}), 200
+    return jsonify({'message': f'Hello {current_user}'}), 200
