@@ -9,7 +9,8 @@ from flask_jwt_extended import get_jwt_identity, jwt_required
 auth_blueprint = Blueprint("auth", __name__)
 api_bp = Blueprint("api", __name__)
 
-profile_bp = Blueprint('profile', __name__)
+profile_bp = Blueprint("profile", __name__)
+
 
 @auth_blueprint.route("/register", methods=["POST"])
 def register():
@@ -52,7 +53,7 @@ def login():
         access_token = create_access_token(identity=user.id)
 
         # Check if the user's profile is complete
-        if hasattr(user, 'profile_complete') and user.profile_complete:
+        if hasattr(user, "profile_complete") and user.profile_complete:
             # If profile is complete, redirect to main page
             return jsonify({"redirect": "/main"}), 200
         else:
@@ -81,7 +82,7 @@ def get_exercises():
     return jsonify(exercises), 200
 
 
-@profile_bp.route('/profile/get', methods=['GET'])
+@profile_bp.route("/profile/get", methods=["GET"])
 @jwt_required()
 def get_profile():
     # Get the current user's ID from the JWT token
