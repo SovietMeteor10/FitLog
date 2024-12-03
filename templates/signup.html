@@ -13,8 +13,12 @@
             <p>Your Journey Measured</p>
             <form id="signup-form" action="/auth/register" method="POST">
                 <div class="form-group">
-                    <label for="name">Your name</label>
-                    <input type="text" id="name" name="username" required>
+                    <label for="first_name">First Name</label>
+                    <input type="text" id="first_name" name="first_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="family_name">Family Name</label>
+                    <input type="text" id="family_name" name="family_name" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email address</label>
@@ -40,4 +44,3 @@
     <script src="/static/js/signup.js"></script> <!-- Link to the JavaScript file -->
 </body>
 </html>
-

@@ -42,6 +42,7 @@ db = SQLAlchemy()
 bcrypt = Bcrypt()
 jwt = JWTManager()
 
+
 def create_app():
     app = Flask(__name__, template_folder="templates")
 
@@ -55,6 +56,7 @@ def create_app():
 
     # Register Blueprints
     from api.routes import auth_blueprint
+
     app.register_blueprint(auth_blueprint, url_prefix="/auth")
 
     print("Blueprints registered successfully")

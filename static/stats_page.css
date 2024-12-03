@@ -1,0 +1,130 @@
+/* General reset and base styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #121212; /* Dark background */
+    color: #e0e0e0; /* Light text for contrast */
+}
+
+/* Main container for the page layout */
+.container.stats-page {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: 300px;
+    background-color: #1c1c1c;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    max-width: 150px;
+    margin-bottom: 10px;
+}
+
+/* Main content styles */
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #222;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Navigation bar styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #333;
+    margin-bottom: 20px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: #e0e0e0;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #888;
+}
+
+.logout-link {
+    color: #e0e0e0;
+    text-decoration: none;
+    transition: color 0.3s;
+    margin-right: 10px; /* Ensures a little padding from the right edge */
+}
+
+.logout-link:hover {
+    color: #888;
+}
+
+
+.nav-links a:hover {
+    color: #888;
+}
+
+/* Stats section styles */
+.stats-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.recent-stats, .recommended-videos, .heat-map {
+    background-color: #1c1c1c;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.recent-stats h3, .recommended-videos h3, .heat-map h3 {
+    color: #e0e0e0;
+    margin-bottom: 15px;
+}
+
+.videos-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.video-placeholder {
+    height: 150px;
+    background-color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #e0e0e0;
+    font-size: 18px;
+}
+
+/* Styles for the canvas elements */
+canvas {
+    width: 100%;
+    height: 300px;
+    background-color: #222;
+}

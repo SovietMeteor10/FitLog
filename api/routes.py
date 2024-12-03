@@ -1,15 +1,15 @@
-"""
 from flask import Blueprint, request, jsonify, render_template
 from app import db  # , bcrypt, jwt  # Now you can safely import these
 from app.models import User
 from .get_exercise import fetch_exercises
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity, jwt_required
-import os
+
 
 auth_blueprint = Blueprint("auth", __name__)
 api_bp = Blueprint("api", __name__)
 
+profile_bp = Blueprint('profile', __name__)
 
 @auth_blueprint.route("/register", methods=["POST"])
 def register():
@@ -80,20 +80,27 @@ def get_exercises():
     exercises = fetch_exercises()
     return jsonify(exercises), 200
 
-"
-@auth_blueprint.route("/test", methods=["GET"])
-def test_template():
-    print("Current working directory:", os.getcwd())  # Current directory
-    print("Templates folder contains:", os.listdir("templates"))  # List contents of templates folder
-    return render_template("test_template.html")
-"""
-from flask import Blueprint, render_template
 
-# Define the blueprint
-auth_blueprint = Blueprint("auth", __name__)
+@profile_bp.route('/profile/get', methods=['GET'])
+@jwt_required()
+def get_profile():
+    # Get the current user's ID from the JWT token
+    user_id = get_jwt_identity()
 
-# Define a simple signup route
-@auth_blueprint.route("/signup", methods=["GET"])
-def signup():
-    print("Signup route accessed through blueprint")
-    return render_template("signup.html")
+    # Query the database for the user's profile information
+    user = User.query.get(user_id)
+
+    if user:
+        # Create a dictionary with user profile details
+        profile_data = {
+            "first_name": user.first_name,
+            "family_name": user.family_name,
+            "age": user.age,
+            "sex": user.sex,
+            "height": user.height,
+            "weight": user.weight,
+            "bmi": user.bmi,
+        }
+        return jsonify(profile_data), 200
+    else:
+        return jsonify({"error": "User not found"}), 404

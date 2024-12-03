@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main Page - FitLog</title>
-    <link rel="stylesheet" href="/static/main_page.css"> <!-- Link to CSS file for consistency -->
+    <link rel="stylesheet" href="/static/index_page.css"> <!-- Link to CSS file for consistency -->
 </head>
 <body>
     <div class="container main-page">
@@ -14,15 +14,16 @@
                 <img src="/static/images/fitlog_logo.jpg" alt="FitLog Logo" class="logo">
                 <h1>FITLOG</h1>
             </div>
-            <div class="menu-item">
-                <h3>Sessions</h3>
-                <!-- Placeholder content, to be linked with backend data -->
-                <p>View and manage your sessions here.</p>
-            </div>
-            <div class="menu-item">
-                <h3>Profile</h3>
-                <!-- Placeholder content, to be linked with backend data -->
-                <p>Access your profile settings.</p>
+
+            <!-- Saved Videos Section -->
+            <div class="saved-videos">
+                <h3>Saved Videos</h3>
+                <div id="video-1" class="video-box">
+                    <p>No video pinned</p> <!-- Placeholder content -->
+                </div>
+                <div id="video-2" class="video-box">
+                    <p>No video pinned</p> <!-- Placeholder content -->
+                </div>
             </div>
         </div>
 
@@ -30,26 +31,24 @@
         <div class="content">
             <!-- Navigation Bar -->
             <div class="navbar">
-                <div class="nav-icon">
-                    <!-- Hamburger icon for navigation -->
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
                 <div class="nav-links">
-                    <a href="#">Sessions</a>
-                    <a href="#">Statistics</a>
-                    <a href="#">Profile</a>
-                    <a href="/logout">Logout</a>
+                    <a href="/sessions">Sessions</a>
+                    <a href="/stats">Statistics</a>
+                    <a href="/profile">Profile</a>
+                </div>
+                <!-- Logout button in the top-right -->
+                <div class="logout-button">
+                    <a href="/logout" class="form-button logout-link">Logout</a>
                 </div>
             </div>
+
             <!-- Stats Section -->
             <div class="stats-section">
                 <h2>Stats</h2>
-                <!-- Placeholder for backend data integration -->
-                <p>Here you will find statistics related to your fitness journey.</p>
             </div>
         </div>
     </div>
+
+    <script src="/static/js/index.js"></script> <!-- Link to JavaScript file -->
 </body>
 </html>

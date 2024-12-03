@@ -3,7 +3,8 @@ document.getElementById("signup-form").addEventListener("submit", function(event
 
     // Collect form data
     const formData = {
-        username: document.getElementById("name").value,
+        first_name: document.getElementById("first_name").value,
+        family_name: document.getElementById("family_name").value,
         email: document.getElementById("email").value,
         password: document.getElementById("password").value
     };
@@ -36,3 +37,4 @@ document.getElementById("signup-form").addEventListener("submit", function(event
         messageElement.style.display = "block";
     });
 });
+;
