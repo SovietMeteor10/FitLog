@@ -78,7 +78,7 @@ body, html {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    width: 300px;
+    width: 400px;
 }
 
 .popup-content label {
@@ -90,3 +90,32 @@ body, html {
 #cardio-based-fields {
     display: none;
 }
+
+#exercise-items {
+    list-style-type: none;
+    padding: 0;
+}
+
+#exercise-items li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.edit-button,
+.delete-button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 5px;
+    border-radius: 3px;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+    background-color: #555;
+}
+

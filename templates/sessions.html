@@ -33,16 +33,15 @@
         </div>
     </div>
 
-    <!-- Add New Session Pop-Up -->
+    <!-- Add New Session Pop-Up (Consolidated Version) -->
     <div id="new-session-popup" class="popup-container">
         <div class="popup-content">
             <h3>Add New Session</h3>
             <label for="session-date">Date</label>
             <input type="date" id="session-date" value="">
 
-            <label for="session-duration-hours">Duration Hours</label>
+            <label for="session-duration-hours">Duration (Hours)</label>
             <select id="session-duration-hours">
-                <!-- Options from 0 to 5 hours -->
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -51,9 +50,8 @@
                 <option value="5">5</option>
             </select>
 
-            <label for="session-duration-minutes">Duration Minutes</label>
+            <label for="session-duration-minutes">Duration (Minutes)</label>
             <select id="session-duration-minutes">
-                <!-- Options from 0 to 59 minutes -->
                 <option value="0">0</option>
                 <option value="15">15</option>
                 <option value="30">30</option>
@@ -62,26 +60,23 @@
 
             <label for="session-name">Session Name</label>
             <select id="session-name">
-                <option value="">Select a Session</option>
+                <option value="">Select...</option>
                 <option value="weightlifting">Weightlifting</option>
                 <option value="cardio">Cardio</option>
                 <option value="weightlifting_cardio">Weightlifting/Cardio</option>
                 <option value="yoga">Yoga</option>
             </select>
 
+            <!-- List of Added Exercises -->
             <div id="exercises-list">
-                <!-- List of added exercises will be shown here -->
+                <h4>Exercises:</h4>
+                <ul id="exercise-items">
+                    <!-- List items for each added exercise will go here -->
+                </ul>
             </div>
 
-            <button id="add-exercise-button" class="form-button">Add Exercise</button>
-            <button id="submit-session" class="form-button">Submit</button>
-        </div>
-    </div>
-
-    <!-- Add Exercise Pop-Up -->
-    <div id="add-exercise-popup" class="popup-container">
-        <div class="popup-content">
-            <h3>Add Exercise</h3>
+            <!-- Add Exercise Section within the same pop-up -->
+            <h4>Add Exercise</h4>
             <label for="exercise-type">Type</label>
             <select id="exercise-type">
                 <option value="">Select...</option>
@@ -107,7 +102,8 @@
                 <input type="number" id="time-spent">
             </div>
 
-            <button id="enter-exercise" class="form-button">Enter</button>
+            <button id="add-exercise-button" class="form-button">Add Exercise</button>
+            <button id="submit-session" class="form-button">Submit</button>
         </div>
     </div>
 
