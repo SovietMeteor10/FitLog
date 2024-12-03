@@ -26,7 +26,8 @@ def create_app():
     from api.routes import auth_blueprint  # Import the auth blueprint
 
     app.register_blueprint(api_bp, url_prefix="/api")
-    app.register_blueprint(auth_blueprint, url_prefix="/auth")  # Register the auth blueprint
+    app.register_blueprint(auth_blueprint, url_prefix="/auth")
+    # Register the auth blueprint
 
     return app
 """

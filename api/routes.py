@@ -2,7 +2,8 @@ from flask import Blueprint, request, jsonify, render_template
 from app import db  # , bcrypt, jwt  # Now you can safely import these
 from app.models import User
 from .get_exercise import fetch_exercises
-from flask_jwt_extended import create_access_token
+
+# from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity, jwt_required
 
 
@@ -50,7 +51,7 @@ def login():
 
     # Check if user exists and if the password matches
     if user and user.check_password(password):
-        access_token = create_access_token(identity=user.id)
+        #  access_token = create_access_token(identity=user.id)
 
         # Check if the user's profile is complete
         if hasattr(user, "profile_complete") and user.profile_complete:
