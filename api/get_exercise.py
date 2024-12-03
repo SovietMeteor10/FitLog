@@ -1,5 +1,5 @@
 import requests
-from app.config import Config
+from config import Config
 
 # Prepare headers with the API key
 headers = {
