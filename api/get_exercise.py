@@ -1,51 +1,34 @@
 import requests
 from config import Config
+from app.models import Exercise
+from app import db
 
-# Prepare headers with the API key
-headers = {
-    # Adjust based on API docs; might be "Token" instead of "Bearer"
-    "Authorization": f"Token {Config.API_KEY}",
+HEADERS = {
+    "x-rapidapi-key": Config.RAPIDAPI_KEY,
+    "x-rapidapi-host": "exercisedb.p.rapidapi.com"
 }
 
+def fetch_and_store_exercises():
+    """
+    Fetch exercises from ExerciseDB API and store them in the database.
+    """
+    response = requests.get(Config.EXERCISE_API_URL, headers=HEADERS)
 
-def fetch_exercises():
-    try:
-        # Make the API request
-        response = requests.get(Config.API_URL, headers=headers)
+    if response.status_code == 200:
+        exercises = response.json()
 
-        # Check the response status code
-        if response.status_code == 200:
-            # Parse the JSON data
-            data = response.json()
-
-            # Extract the "results" key
-            exercises_data = data.get("results", [])
-
-            exercises = []
-            for exercise in exercises_data:
-                exercises.append(
-                    {
-                        "name": exercise.get("name", "Unknown"),
-                        "description": exercise.get(
-                            "description", "No description available"
-                        ),
-                        "category": exercise.get("category", {}).get(
-                            "name", "Uncategorized"
-                        ),  # Nested dictionary
-                        "muscle_group": exercise.get(
-                            "muscles", []
-                        ),  # List of muscle groups
-                        "image": exercise.get("images", [{}])[0].get(
-                            "image", None
-                        ),  # List with potential images
-                    }
+        for exercise in exercises:
+            existing_exercise = Exercise.query.filter_by(exercise_name=exercise["name"]).first()
+            if not existing_exercise:
+                new_exercise = Exercise(
+                    exercise_name=exercise["name"],
+                    description=exercise.get("target", ""),
+                    category=exercise.get("bodyPart", ""),
+                    youtube_videos=None  # Extend this with YouTube integration if needed
                 )
+                db.session.add(new_exercise)
 
-            return exercises
-        else:
-            # Handle non-200 responses
-            return {"error": "Status code: {response.status_code}"}
-
-    except requests.RequestException as e:
-        # Handle network or other request exceptions
-        return {"error": f"An error occurred: {str(e)}"}
+        db.session.commit()
+        print("Exercises successfully stored in the database.")
+    else:
+        print(f"Failed to fetch exercises. Status code: {response.status_code}")
