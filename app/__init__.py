@@ -9,6 +9,7 @@ db = SQLAlchemy()
 bcrypt = Bcrypt()
 jwt = JWTManager()
 
+
 def create_app(config_filename):
     """
     Factory function to create and configure the Flask application.
@@ -23,6 +24,7 @@ def create_app(config_filename):
 
     # Register blueprints after extensions are initialized
     from api.routes import api_bp, profile_bp
+
     app.register_blueprint(api_bp, url_prefix="/api")
     app.register_blueprint(profile_bp, url_prefix="/profile")
 
@@ -30,10 +32,10 @@ def create_app(config_filename):
     with app.app_context():
         try:
             from api.get_exercise import fetch_and_store_exercises  # Delayed import
+
             fetch_and_store_exercises()
             print("Exercises fetched and stored successfully.")
         except Exception as e:
             print(f"Error while fetching exercises: {e}")
 
     return app
-

@@ -5,8 +5,9 @@ from app import db
 
 HEADERS = {
     "x-rapidapi-key": Config.RAPIDAPI_KEY,
-    "x-rapidapi-host": "exercisedb.p.rapidapi.com"
+    "x-rapidapi-host": "exercisedb.p.rapidapi.com",
 }
+
 
 def fetch_and_store_exercises():
     """
@@ -18,13 +19,15 @@ def fetch_and_store_exercises():
         exercises = response.json()
 
         for exercise in exercises:
-            existing_exercise = Exercise.query.filter_by(exercise_name=exercise["name"]).first()
+            existing_exercise = Exercise.query.filter_by(
+                exercise_name=exercise["name"]
+            ).first()
             if not existing_exercise:
                 new_exercise = Exercise(
                     exercise_name=exercise["name"],
                     description=exercise.get("target", ""),
                     category=exercise.get("bodyPart", ""),
-                    youtube_videos=None  # Extend this with YouTube integration if needed
+                    youtube_videos=None,  # Extend this with YouTube integration if needed
                 )
                 db.session.add(new_exercise)
 

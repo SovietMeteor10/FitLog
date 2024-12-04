@@ -1,5 +1,6 @@
 from api.get_exercise import fetch_exercises
 
+
 def test_fetch_exercises_with_youtube():
     exercises = fetch_exercises()
     if "error" in exercises:
@@ -16,6 +17,7 @@ def test_fetch_exercises_with_youtube():
             for video in exercise["youtube_videos"]:
                 print(f"  - {video['title']} ({video['url']})")
             print("\n")
+
 
 if __name__ == "__main__":
     test_fetch_exercises_with_youtube()

@@ -43,7 +43,9 @@ def login():
     user = User.query.filter_by(email=email).first()
     if user and user.check_password(password):
         # Redirect based on profile completion
-        redirect_url = "/main" if getattr(user, "profile_complete", False) else "/profile"
+        redirect_url = (
+            "/main" if getattr(user, "profile_complete", False) else "/profile"
+        )
         return jsonify({"redirect": redirect_url}), 200
 
     return jsonify({"message": "Invalid email or password"}), 401
@@ -83,7 +85,9 @@ def create_session():
     Creates a user session and writes it to the database.
     """
     session_data = request.get_json()
-    write_session_to_db(session_data, user_id=1)  # Replace user_id=1 with dynamic user retrieval
+    write_session_to_db(
+        session_data, user_id=1
+    )  # Replace user_id=1 with dynamic user retrieval
     return jsonify({"message": "Session created successfully"})
 
 
