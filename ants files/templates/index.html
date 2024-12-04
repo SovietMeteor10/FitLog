@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Circle of Balls</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #353535;
+            overflow: hidden;
+        }
+
+        #circle-container {
+            position: relative;
+            width: 500px;
+            height: 500px;
+        }
+
+        .ball {
+            position: absolute;
+            background-color: #ffffff;
+            border-radius: 50%;
+            transition: all 0.5s ease;
+        }
+        #circle-text {
+            position: absolute;
+            top: 50%; /* Position at the vertical center */
+            left: 50%; /* Position at the horizontal center */
+            transform: translate(-50%, -75%); /* Center precisely */
+            font-size: 36px; /* Adjust size as needed */
+            font-weight: bold; /* Bold text */
+            text-align: center; /* Center the text */
+            color: #ffffff; /* Text color */
+            pointer-events: none; /* Ensure it doesn't block interactions */
+            font-family: 'Arial', sans-serif; /* Change to desired font */
+        }
+        #circle-subtext {
+            position: absolute;
+            top: 50%; /* Position at the vertical center */
+            left: 50%; /* Position at the horizontal center */
+            transform: translate(-50%, 75%); /* Center precisely */
+            font-size: 16px; /* Adjust size as needed */
+            font-weight: bold; /* Bold text */
+            text-align: center; /* Center the text */
+            color: #ffffff; /* Text color */
+            pointer-events: none; /* Ensure it doesn't block interactions */
+            font-family: 'Arial', sans-serif; /* Change to desired font */
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div id="circle-container">
+            <div id="circle-text">FitLog</div>
+            <div id="circle-subtext">Your Journey Measured</div>
+        </div>
+        <script src="script.js"></script>
+    </div>
+</body>
+</html>
