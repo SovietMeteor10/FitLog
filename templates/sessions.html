@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sessions - FitLog</title>
     <link rel="stylesheet" href="/static/sessions_page.css"> <!-- Link to CSS file -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Adding jQuery -->
 </head>
 
 <body>
@@ -14,6 +15,16 @@
             <img src="/static/images/fitlog_logo.jpg" alt="FitLog Logo" class="logo">
             <h1>FITLOG</h1>
         </div>
+
+        <!-- Navigation Bar -->
+        <div class="navbar">
+            <div class="nav-links">
+                <a href="/index">Main</a>
+                <a href="/stats">Statistics</a>
+                <a href="/profile">Profile</a>
+            </div>
+        </div>
+
         <div class="sessions-container">
             <h2>Your Sessions</h2>
             <button id="add-new-session" class="form-button">Add New Session</button>
@@ -36,74 +47,25 @@
     <!-- Add New Session Pop-Up (Consolidated Version) -->
     <div id="new-session-popup" class="popup-container">
         <div class="popup-content">
-            <h3>Add New Session</h3>
-            <label for="session-date">Date</label>
-            <input type="date" id="session-date" value="">
+            <button id="close-popup" class="close-button">X</button> <!-- Close button -->
+            <h3 class="popup-title">Add New Session</h3>
+            <form method="POST" id="new-session-form">
+                <div class="form-group">
+                    <label for="session_name">Session Name:</label>
+                    <input type="text" id="session_name" name="session_name" required>
+                </div>
 
-            <label for="session-duration-hours">Duration (Hours)</label>
-            <select id="session-duration-hours">
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
 
-            <label for="session-duration-minutes">Duration (Minutes)</label>
-            <select id="session-duration-minutes">
-                <option value="0">0</option>
-                <option value="15">15</option>
-                <option value="30">30</option>
-                <option value="45">45</option>
-            </select>
-
-            <label for="session-name">Session Name</label>
-            <select id="session-name">
-                <option value="">Select...</option>
-                <option value="weightlifting">Weightlifting</option>
-                <option value="cardio">Cardio</option>
-                <option value="weightlifting_cardio">Weightlifting/Cardio</option>
-                <option value="yoga">Yoga</option>
-            </select>
-
-            <!-- List of Added Exercises -->
-            <div id="exercises-list">
-                <h4>Exercises:</h4>
-                <ul id="exercise-items">
-                    <!-- List items for each added exercise will go here -->
-                </ul>
-            </div>
-
-            <!-- Add Exercise Section within the same pop-up -->
-            <h4>Add Exercise</h4>
-            <label for="exercise-type">Type</label>
-            <select id="exercise-type">
-                <option value="">Select...</option>
-                <option value="bicep_curls">Bicep Curls</option>
-                <option value="treadmill">Treadmill</option>
-                <option value="squats">Squats</option>
-                <option value="plank">Plank</option>
-            </select>
-
-            <div id="weight-based-fields">
-                <label for="sets">Sets</label>
-                <input type="number" id="sets">
-                <label for="reps">Reps</label>
-                <input type="number" id="reps">
-                <label for="weight">Weight (Kg)</label>
-                <input type="number" id="weight" step="0.1">
-            </div>
-
-            <div id="cardio-based-fields">
-                <label for="distance">Distance Covered (Km)</label>
-                <input type="number" id="distance" step="0.1">
-                <label for="time-spent">Time Spent (Minutes)</label>
-                <input type="number" id="time-spent">
-            </div>
-
-            <button id="add-exercise-button" class="form-button">Add Exercise</button>
-            <button id="submit-session" class="form-button">Submit</button>
+                <div id="exercises" class="form-group">
+                    <!-- Initial exercise will be added here -->
+                </div>
+                <button type="button" id="add_exercise" class="form-button add-exercise-button">Add Exercise</button>
+                <button type="submit" class="form-button submit-button">Submit</button>
+            </form>
         </div>
     </div>
 
@@ -111,5 +73,6 @@
 </body>
 
 </html>
+
 
 

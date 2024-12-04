@@ -27,6 +27,32 @@ body, html {
     margin-bottom: 10px;
 }
 
+/* Navigation bar */
+.navbar {
+    width: 100%;
+    background-color: #1c1c1c;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: #e0e0e0;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #888;
+}
+
 /* Sessions container */
 .sessions-container {
     width: 100%;
@@ -71,51 +97,74 @@ body, html {
     background-color: rgba(0, 0, 0, 0.8);
     justify-content: center;
     align-items: center;
+    z-index: 10;
 }
 
 .popup-content {
     background-color: #1c1c1c;
-    padding: 20px;
+    padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    width: 400px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    width: 500px;
+    position: relative;
 }
 
 .popup-content label {
     display: block;
-    margin-top: 10px;
+    margin-top: 15px;
+    color: #e0e0e0;
 }
 
-#weight-based-fields,
-#cardio-based-fields {
-    display: none;
+.add-exercise-button,
+.submit-button {
+    margin-top: 20px;
+    width: 100%;
 }
 
-#exercise-items {
-    list-style-type: none;
-    padding: 0;
+.set {
+    margin-top: 15px;
 }
 
-#exercise-items li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
+.exercise {
+    padding: 15px;
+    border: 1px solid #333;
+    margin-bottom: 15px;
+    border-radius: 5px;
 }
 
-.edit-button,
-.delete-button {
+.add_set,
+.delete_exercise,
+.delete_set {
     background-color: #333;
     color: #fff;
     border: none;
     padding: 5px 10px;
+    margin-top: 10px;
     cursor: pointer;
-    margin-left: 5px;
-    border-radius: 3px;
+    border-radius: 5px;
 }
 
-.edit-button:hover,
-.delete-button:hover {
+.add_set:hover,
+.delete_exercise:hover,
+.delete_set:hover {
+    background-color: #555;
+}
+
+/* Close Button Styles */
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #444;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    z-index: 11; /* Ensure it is on top of other content in the pop-up */
+}
+
+.close-button:hover {
     background-color: #555;
 }
 
