@@ -1,60 +1,44 @@
 import adbc_driver_postgresql.dbapi
-from config import Config
 
 
-def write_exercises_to_db(exercises):
-    """
-    Writes exercises fetched from the API to the database.
-    """
-    db_url = Config.DATABASE_URL
+def write_session_to_db(session, user_id=1):
+    db_url = ("postgresql://"
+              "postgres.fqqhfswbaqorcblltgxn:FitLogSSE2425"
+              "@aws-0-eu-west-2.pooler.supabase.com:5432/postgres")
     conn = adbc_driver_postgresql.dbapi.connect(db_url)
-
-    try:
-        with conn:
-            with conn.cursor() as cur:
-                for exercise in exercises:
-                    cur.execute(
-                        """
-                        INSERT INTO exercises (exercise_name, description, category, youtube_videos)
+    cur = conn.cursor()
+    cur.execute('''
+                INSERT INTO sessions (user_id, session_name, date)
+                VALUES ($1, $2, $3)
+                RETURNING session_id
+            ''', (user_id, session['Name'], session['Date']))
+    session_id = cur.fetchone()[0]
+    # 2. Process each exercise
+    for exercise_name in session['Exercises']:
+        # Insert or get exercise
+        cur.execute('''
+                    INSERT INTO exercises (exercise_name)
+                    VALUES ($1)
+                    ON CONFLICT (exercise_name) DO UPDATE
+                    SET exercise_name = EXCLUDED.exercise_name
+                    RETURNING exercise_id
+                ''', (exercise_name,))
+        exercise_id = cur.fetchone()[0]
+        # 3. Create session-exercise link
+        cur.execute('''
+                    INSERT INTO sessions_exercises (session_id, exercise_id)
+                    VALUES ($1, $2)
+                    RETURNING session_exercise_id
+                ''', (session_id, exercise_id))
+        session_exercise_id = cur.fetchone()[0]
+        # 4. Insert sets
+        for set_number, (weight, reps) in enumerate(
+                session['Exercises'][exercise_name], 1
+        ):
+            cur.execute('''
+                        INSERT INTO sets (session_exercise_id, set_number,
+                         reps, weight)
                         VALUES ($1, $2, $3, $4)
-                        ON CONFLICT (exercise_name) DO NOTHING
-                    """,
-                        (
-                            exercise["name"],
-                            exercise["target"],
-                            exercise["bodyPart"],
-                            fetch_youtube_videos(exercise["name"]),
-                        ),
-                    )
-    except Exception as e:
-        print(f"Error writing exercises to DB: {e}")
-    finally:
-        conn.close()
-
-
-def write_session_to_db(session):
-    conn = adbc_driver_postgresql.dbapi.connect(Config.SQLALCHEMY_DATABASE_URI)
-    try:
-        with conn.cursor() as cur:
-            cur.execute(
-                "INSERT INTO sessions (session_name, date) VALUES (%s, %s) RETURNING session_id",
-                (session["Name"], session["Date"]),
-            )
-            session_id = cur.fetchone()[0]
-
-            for exercise, sets in session["Exercises"].items():
-                cur.execute(
-                    "INSERT INTO exercises (exercise_name) VALUES (%s) ON CONFLICT DO NOTHING RETURNING exercise_id",
-                    (exercise,),
-                )
-                exercise_id = cur.fetchone()[0]
-
-                for set_data in sets:
-                    weight, reps = set_data
-                    cur.execute(
-                        "INSERT INTO sets (session_exercise_id, set_number, weight, reps) VALUES (%s, %s, %s, %s)",
-                        (session_id, len(sets), weight, reps),
-                    )
-            conn.commit()
-    finally:
-        conn.close()
+                    ''', (session_exercise_id, set_number, reps, weight))
+    conn.commit()
+    cur.close()

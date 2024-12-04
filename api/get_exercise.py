@@ -27,11 +27,12 @@ def fetch_and_store_exercises():
                     exercise_name=exercise["name"],
                     description=exercise.get("target", ""),
                     category=exercise.get("bodyPart", ""),
-                    youtube_videos=None,  # Extend this with YouTube integration if needed
+                    youtube_videos=None,
                 )
                 db.session.add(new_exercise)
 
         db.session.commit()
         print("Exercises successfully stored in the database.")
     else:
-        print(f"Failed to fetch exercises. Status code: {response.status_code}")
+        print(f"Failed to fetch exercises."
+              f" Status code: {response.status_code}")

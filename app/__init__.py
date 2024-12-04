@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
-import os
+
 
 # Initialize extensions
 db = SQLAlchemy()
@@ -31,7 +31,8 @@ def create_app(config_filename):
     # Fetch and store exercises on startup
     with app.app_context():
         try:
-            from api.get_exercise import fetch_and_store_exercises  # Delayed import
+            from api.get_exercise import \
+                fetch_and_store_exercises  # Delayed import
 
             fetch_and_store_exercises()
             print("Exercises fetched and stored successfully.")

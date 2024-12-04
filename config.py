@@ -11,5 +11,7 @@ class Config:
     API_URL = "https://wger.de/api/v2/exercise/"
     API_KEY = os.getenv("API_KEY", "0e796d1f4ca0e764b163b0bff8011c96a37fb894")
     YOUTUBE_API_URL = "https://www.googleapis.com/youtube/v3/search"
-    RAPIDAPI_KEY = os.getenv("80bf475784mshb3508101d4c1216p1d2f3ajsne4411c275351")
-    YOUTUBE_API_KEY = os.getenv("AIzaSyB0DWNypHqqZoKOuNzuLDo39Tm22zJzMg8")
+    RAPIDAPI_KEY = os.getenv("80bf475784mshb3508101"
+                             "d4c1216p1d2f3ajsne4411c275351")
+    YOUTUBE_API_KEY = os.getenv("AIzaSyB0DWNypHqqZoKO"
+                                "uNzuLDo39Tm22zJzMg8")

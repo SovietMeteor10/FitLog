@@ -74,7 +74,8 @@ def fetch_and_store():
     """
     try:
         fetch_and_store_exercises()
-        return jsonify({"message": "Exercises fetched and stored successfully."}), 200
+        return jsonify({"message": "Exercises fetched "
+                                   "and stored successfully."}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

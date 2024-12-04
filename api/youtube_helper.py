@@ -3,7 +3,7 @@ from urllib.parse import urlencode
 
 YOUTUBE_API_BASE_URL = "https://www.googleapis.com/youtube/v3/search"
 YOUTUBE_API_KEY = (
-    "AIzaSyB0DWNypHqqZoKOuNzuLDo39Tm22zJzMg8"  # Replace with your actual API key
+    "AIzaSyB0DWNypHqqZoKOuNzuLDo39Tm22zJzMg8"
 )
 
 
@@ -33,13 +33,15 @@ def fetch_youtube_videos(query, max_results=5):
                         "title": item["snippet"]["title"],
                         "description": item["snippet"]["description"],
                         "videoId": item["id"]["videoId"],
-                        "url": f"https://www.youtube.com/watch?v={item['id']['videoId']}",
+                        "url": f"https://www.youtube.com"
+                               f"/watch?v={item['id']['videoId']}",
                     }
                 )
             return videos
         else:
             return {
-                "error": f"Failed to fetch videos. Status code: {response.status_code}"
+                "error": f"Failed to "
+                         f"fetch videos. Status code: {response.status_code}"
             }
 
     except requests.RequestException as e:

@@ -1,5 +1,3 @@
-from flask_sqlalchemy import SQLAlchemy
-
 # Import db from app
 from app import db
 
@@ -30,7 +28,11 @@ class Session(db.Model):
     __tablename__ = "sessions"
 
     session_id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable=False)
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey("users.user_id"),
+        nullable=False
+    )
     session_name = db.Column(db.String(80), nullable=False)
     date = db.Column(db.Date, nullable=False)
 
