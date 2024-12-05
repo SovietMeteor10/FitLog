@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sessions - FitLog</title>
     <link rel="stylesheet" href="/static/css/sessions_page.css"> <!-- Link to CSS file -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Adding jQuery -->
 </head>
 
 <body>
@@ -14,6 +15,16 @@
             <img src="/static/images/fitlog_logo.jpg" alt="FitLog Logo" class="logo">
             <h1>FITLOG</h1>
         </div>
+
+        <!-- Navigation Bar -->
+        <div class="navbar">
+            <div class="nav-links">
+                <a href="/index">Main</a>
+                <a href="/stats">Statistics</a>
+                <a href="/profile">Profile</a>
+            </div>
+        </div>
+
         <div class="sessions-container">
             <h2>Your Sessions</h2>
             <button id="add-new-session" class="form-button">Add New Session</button>
@@ -33,109 +44,32 @@
         </div>
     </div>
 
-    <!-- Add New Session Pop-Up -->
+    <!-- Add New Session Pop-Up (Consolidated Version) -->
     <div id="new-session-popup" class="popup-container">
         <div class="popup-content">
-            <h3>Add New Session</h3>
-            <label for="session-date">Date</label>
-            <input type="date" id="session-date" value="">
-
-            <label for="session-duration-hours">Duration (Hours)</label>
-            <select id="session-duration-hours">
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
-
-            <label for="session-duration-minutes">Duration (Minutes)</label>
-            <select id="session-duration-minutes">
-                <option value="0">0</option>
-                <option value="15">15</option>
-                <option value="30">30</option>
-                <option value="45">45</option>
-            </select>
-
-            <label for="session-name">Session Name</label>
-            <select id="session-name">
-                <option value="">Select...</option>
-                <option value="weightlifting">Weightlifting</option>
-                <option value="cardio">Cardio</option>
-                <option value="weightlifting_cardio">Weightlifting/Cardio</option>
-                <option value="yoga">Yoga</option>
-            </select>
-
-            <!-- Exercise Dropdown and List -->
-            <div id="exercises-section">
-                <h4>Add Exercises</h4>
-                <label for="exercise-type">Select Exercise</label>
-                <select id="exercise-type">
-                    <option value="">Loading...</option> <!-- Placeholder -->
-                </select>
-
-                <button id="add-exercise-button" class="form-button">Add Exercise</button>
-
-                <div id="exercises-list">
-                    <h4>Selected Exercises:</h4>
-                    <ul id="exercise-items">
-                        <!-- Selected exercises will appear here -->
-                    </ul>
+            <button id="close-popup" class="close-button">X</button> <!-- Close button -->
+            <h3 class="popup-title">Add New Session</h3>
+            <form method="POST" id="new-session-form">
+                <div class="form-group">
+                    <label for="session_name">Session Name:</label>
+                    <input type="text" id="session_name" name="session_name" required>
                 </div>
-            </div>
 
-            <button id="submit-session" class="form-button">Submit</button>
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+
+                <div id="exercises" class="form-group">
+                    <!-- Initial exercise will be added here -->
+                </div>
+                <button type="button" id="add_exercise" class="form-button add-exercise-button">Add Exercise</button>
+                <button type="submit" class="form-button submit-button">Submit</button>
+            </form>
         </div>
     </div>
 
-    <script>
-        // Fetch exercises and populate the dropdown
-        async function populateExerciseDropdown() {
-            const exerciseDropdown = document.getElementById('exercise-type');
-            try {
-                const response = await fetch('/get_exercises'); // Call the API route
-                const exercises = await response.json();
-
-                // Clear placeholder and populate exercises
-                exerciseDropdown.innerHTML = '<option value="">Select...</option>';
-                exercises.forEach(exercise => {
-                    const option = document.createElement('option');
-                    option.value = exercise.id;
-                    option.textContent = exercise.name;
-                    exerciseDropdown.appendChild(option);
-                });
-            } catch (error) {
-                console.error('Error fetching exercises:', error);
-                exerciseDropdown.innerHTML = '<option value="">Error loading exercises</option>';
-            }
-        }
-
-        // Handle exercise selection
-        function handleAddExercise() {
-            const exerciseDropdown = document.getElementById('exercise-type');
-            const selectedExerciseId = exerciseDropdown.value;
-            const selectedExerciseName = exerciseDropdown.options[exerciseDropdown.selectedIndex].text;
-
-            if (selectedExerciseId) {
-                const exerciseList = document.getElementById('exercise-items');
-                const listItem = document.createElement('li');
-                listItem.textContent = selectedExerciseName;
-                listItem.dataset.exerciseId = selectedExerciseId; // Store the ID for submission
-                exerciseList.appendChild(listItem);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            populateExerciseDropdown();
-
-            const addExerciseButton = document.getElementById('add-exercise-button');
-            addExerciseButton.addEventListener('click', handleAddExercise);
-        });
-    </script>
-
-    <script src="/static/js/sessions.js"></script> <!-- Link to additional JavaScript file -->
+    <script src="/static/js/sessions.js"></script> <!-- Link to JavaScript file -->
 </body>
 
 </html>
-
