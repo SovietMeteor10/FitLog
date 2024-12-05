@@ -2,41 +2,37 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
+from flask_migrate import Migrate
+from flask_login import LoginManager
 
-
-# Initialize extensions
+# Initialize Flask extensions
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 jwt = JWTManager()
+migrate = Migrate()
+login_manager = LoginManager()  # Use snake_case for consistency
+login_manager.login_view = "main.login"  # Redirect here if not authenticated
+login_manager.login_message = "Please log in to access this page."  # Default login message
 
-
-def create_app(config_filename):
-    """
-    Factory function to create and configure the Flask application.
-    """
+def create_app():
     app = Flask(__name__)
-    app.config.from_object(config_filename)
+    app.config.from_object("app.config.Config")  # Load app configuration
 
     # Initialize extensions
     db.init_app(app)
     bcrypt.init_app(app)
     jwt.init_app(app)
+    migrate.init_app(app, db)
+    login_manager.init_app(app)
 
-    # Register blueprints after extensions are initialized
-    from api.routes import api_bp, profile_bp
+    # User loader function for Flask-Login
+    @login_manager.user_loader
+    def load_user(user_id):
+        from app.models import User  # Import User model
+        return User.query.get(int(user_id))  # Fetch user by ID
 
-    app.register_blueprint(api_bp, url_prefix="/api")
-    app.register_blueprint(profile_bp, url_prefix="/profile")
-
-    # Fetch and store exercises on startup
-    with app.app_context():
-        try:
-            from api.get_exercise import \
-                fetch_and_store_exercises  # Delayed import
-
-            fetch_and_store_exercises()
-            print("Exercises fetched and stored successfully.")
-        except Exception as e:
-            print(f"Error while fetching exercises: {e}")
+    # Register blueprints
+    from app.routes import register_blueprints
+    register_blueprints(app)
 
     return app
