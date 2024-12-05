@@ -1,76 +1,61 @@
-from flask import Blueprint, jsonify, render_template, request
+from flask import Blueprint, jsonify, render_template, request, session
 from app.models import Session, Exercise, SessionExercise, User
 from app import db
 from app.utils.youtube_api import search_youtube_videos
+from app.utils.write_to_db import write_session_to_db
+from app.database import db_session
+from sqlalchemy import select
+import datetime
 
 session_bp = Blueprint('session', __name__)
 
 # List Sessions
-@session_bp.route('/')
-def list_sessions():
-    """
-    List all sessions stored in the database.
-    """
-    sessions = Session.query.all()
-    session_data = [
-        {"id": session.id, "date": session.date, "name": session.name}
-        for session in sessions
-    ]
-    return render_template('sessions.html', sessions=session_data)
-
-# Add New Session
-@session_bp.route('/submit_session', methods=['POST'])
-def submit_session():
-    """
-    Handle the submission of a new session with exercises.
-    """
-    data = request.get_json()
-
-    # Validate incoming data
-    if not data or "date" not in data or "name" not in data or "exercises" not in data:
-        return jsonify({"error": "Invalid session data"}), 400
+@session_bp.route('/', methods=['GET', 'POST'])
+def handle_sessions():
+    if request.method == 'POST':
+        session_data = {
+            'Name': request.form.get('session_name'),
+            'Date': datetime.datetime.strptime(
+                request.form.get('date'),
+                '%Y-%m-%d'
+            ),
+            'Exercises': {}
+        }
+        # Process form data
+        exercise_inputs = [k for k in request.form.keys()
+                           if k.startswith('exercise_')]
+        for exercise_input in exercise_inputs:
+            exercise_id = exercise_input.split('_')[1]
+            exercise_name = request.form.get(f'exercise_{exercise_id}')
+            session_data['Exercises'][exercise_name] = []
+            # Get all sets for this exercise
+            set_count = 1
+            while True:
+                weight = request.form.get(f'weight_{exercise_id}_{set_count}')
+                reps = request.form.get(f'reps_{exercise_id}_{set_count}')
+                if not weight or not reps:
+                    break
+                session_data['Exercises'][exercise_name].append((
+                    float(weight), int(reps)
+                ))
+                set_count += 1
+        # Here you would typically save session_data to your database
+        write_session_to_db(session_data, user_id=session.get("user_id"))
 
     try:
-        # Create a new session
-        new_session = Session(
-            name=data["name"],
-            date=data["date"],
-            duration_hours=data["duration"]["hours"],
-            duration_minutes=data["duration"]["minutes"],
-        )
-        db.session.add(new_session)
-        db.session.commit()  # Commit to get the session ID
-
-        # Add exercises to the session
-        for exercise_data in data["exercises"]:
-            # Check if the exercise already exists
-            exercise = Exercise.query.filter_by(name=exercise_data["type"]).first()
-            if not exercise:
-                # Create a new exercise if it doesn't exist
-                exercise = Exercise(name=exercise_data["type"])
-                db.session.add(exercise)
-                db.session.commit()  # Commit to get the exercise ID
-
-            # Create a SessionExercise entry
-            session_exercise = SessionExercise(
-                session_id=new_session.id,
-                exercise_id=exercise.id,
-                sets=exercise_data.get("sets", None),
-                reps=exercise_data.get("reps", None),
-                weight=exercise_data.get("weight", None),
-                distance=exercise_data.get("distance", None),
-                time_spent=exercise_data.get("timeSpent", None),
-            )
-            db.session.add(session_exercise)
-
-        # Commit all changes
-        db.session.commit()
-
-        return jsonify({"message": "Session submitted successfully"}), 201
-
+        sessions = Session.query.all()
+        session_data = [
+            {"date": s.date, "session_name": s.session_name}
+            for s in sessions
+            if s.user_id == session.get("user_id") #here
+        ]
+        return render_template('sessions.html', sessions=session_data)
     except Exception as e:
-        db.session.rollback()  # Rollback on error
-        return jsonify({"error": f"An error occurred: {str(e)}"}), 500
+        # Log the error for debugging
+        print(f"Error fetching sessions: {str(e)}")
+        return "An error occurred while fetching sessions", 500
+
+
 
 # Retrieve Exercises
 @session_bp.route('/get_exercises', methods=['GET'])

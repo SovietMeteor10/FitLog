@@ -1,7 +1,8 @@
-from flask import Blueprint, request, jsonify, redirect, render_template, url_for, flash
+from flask import Blueprint, request, jsonify, redirect, render_template, url_for, flash, session
 from flask_login import login_user, logout_user, login_required, current_user
 from app.models import User, Exercise
-from app import db
+from app.database import db_session
+from werkzeug.security import generate_password_hash, check_password_hash
 
 main_bp = Blueprint('main', __name__)
 
@@ -15,24 +16,23 @@ def index():
 @main_bp.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        email = request.form.get("email")
-        password = request.form.get("password")
+        email_address = request.form['email_address']
+        password = request.form['password']
+        error = None
+        user = User.query.filter_by(email_address=email_address).first()
+        if user is None:
+            error = 'Invalid email address.'
+        elif not check_password_hash(user.password, password): #Make this secure
+            error = 'Invalid password.'
 
-        # Authenticate the user
-        user = User.query.filter_by(email=email).first()
-        if user and user.check_password(password):
-            login_user(user)
-            flash("Logged in successfully",success=True)
-            # Redirect to the index page on successful login
+        if error is None:
+            session.clear()
+            session['user_id'] = user.user_id
             return redirect(url_for('main.index'))
 
-        # If login fails, re-render login page with error message
-        flash ("Invalid email or password",error=True)
-        return render_template('login.html', error="Invalid email or password")
+        flash(error)
 
-    # Render login page for GET requests
     return render_template('login.html')
-
 
 @main_bp.route('/logout')
 @login_required  # Only logged-in users can access this route
@@ -43,23 +43,20 @@ def logout():
 
 @main_bp.route("/register", methods=["GET", "POST"])
 def register():
-    if request.method == "GET":
-        return render_template("signup.html")  # Create a simple register.html file with a form
+    if request.method == 'POST':
+        first_name = request.form['first_name']
+        family_name = request.form['family_name']
+        email_address = request.form['email_address']
+        password = generate_password_hash(request.form['password'], method='pbkdf2')
 
-    data = request.get_json() if request.is_json else request.form
-    username = data.get("username")
-    email = data.get("email")
-    password = data.get("password")
+        u = User(first_name, family_name, email_address, password)
 
-    if User.query.filter_by(email=email).first():
-        return jsonify({"message": "Email already exists"}), 400
+        db_session.add(u)
+        db_session.commit()
+        return redirect(url_for('main.login'))
 
-    user = User(username=username, email=email)
-    user.set_password(password)
-    db.session.add(user)
-    db.session.commit()
+    return render_template('signup.html')
 
-    return jsonify({"message": "User registered successfully"}), 201
 
 
 @main_bp.route('/stats')

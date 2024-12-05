@@ -1,4 +1,4 @@
-document.getElementById("login-form").addEventListener("submit", function(event) {
+/*document.getElementById("login-form").addEventListener("submit", function(event) {
     event.preventDefault(); // Prevent the form from submitting normally
 
     const formData = {
@@ -32,5 +32,5 @@ document.getElementById("login-form").addEventListener("submit", function(event)
         messageElement.className = "message error";
         messageElement.style.display = "block";
     });
-});
+});*/
 

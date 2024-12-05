@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
         $(this).closest('.set').remove();
     });
 
-    // Submit session handler
+    /*// Submit session handler
     document.getElementById("new-session-form").addEventListener("submit", function (event) {
         event.preventDefault(); // Prevent default form submission
 
@@ -107,5 +107,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Close the pop-up
         newSessionPopup.style.display = "none";
-    });
+    });*/
 });

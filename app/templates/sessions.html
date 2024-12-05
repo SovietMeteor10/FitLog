@@ -34,12 +34,16 @@
                     <tr>
                         <th>Date</th>
                         <th>Session</th>
-                        <th>Duration</th>
                     </tr>
                 </thead>
                 <tbody id="sessions-list">
-                    <!-- Placeholder for sessions list -->
-                </tbody>
+                {% for session in sessions %}
+                <tr>
+                     <td>{{ session.date }}</td>
+                    <td>{{ session.session_name }}</td>
+                </tr>
+    {% endfor %}
+</tbody>
             </table>
         </div>
     </div>

@@ -33,6 +33,11 @@ class Session(Base):
     session_name = Column(String)
     date = Column(Date)
 
+    def __init__(self, user_id, session_name, date):
+        self.user_id = user_id
+        self.session_name = session_name
+        self.date = date
+
     user = relationship("User", back_populates="sessions")
     session_exercises = relationship("SessionExercise", back_populates="session")
 

@@ -4,6 +4,7 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from flask_login import LoginManager
 
+
 # Initialize Flask extensions
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -21,6 +22,7 @@ def create_app():
     bcrypt.init_app(app)
     jwt.init_app(app)
     login_manager.init_app(app)
+
 
     # User loader function for Flask-Login
     @login_manager.user_loader
