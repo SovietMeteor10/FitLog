@@ -1,9 +1,8 @@
 from flask import Blueprint, request, redirect, render_template, url_for, flash, session
-from flask_login import logout_user, login_required, current_user
 from app.models import User
 from app.database import db_session
 from werkzeug.security import generate_password_hash, check_password_hash
-
+import functools
 
 main_bp = Blueprint('main', __name__)
 
@@ -11,7 +10,7 @@ main_bp = Blueprint('main', __name__)
 @main_bp.route('/index')
 def index():
     # Pass the logged in user to the index template
-    return render_template('index.html', user=current_user)
+    return render_template('index.html')
 
 
 # ---------- AUTH ROUTES ----------
@@ -31,19 +30,12 @@ def login():
         if error is None:
             session.clear()
             session['user_id'] = user.user_id
+            session['user_first_name'] = user.first_name
             return redirect(url_for('main.index'))
 
         flash(error)
 
     return render_template('login.html')
-
-
-@main_bp.route('/logout')
-@login_required  # Only logged-in users can access this route
-def logout():
-    logout_user()  # Log the user out
-    flash("You have been logged out.", "info")
-    return redirect(url_for('main.login'))
 
 
 @main_bp.route("/register", methods=["GET", "POST"])
@@ -61,3 +53,20 @@ def register():
         return redirect(url_for('main.login'))
 
     return render_template('signup.html')
+
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if session.get('user_id') is None:
+            return redirect(url_for('main.login'))
+
+        return view(**kwargs)
+
+    return wrapped_view
+
+
+@main_bp.route('/logout')
+@login_required  # Only logged-in users can access this route
+def logout():
+    session.clear()
+    return redirect(url_for('main.login'))
