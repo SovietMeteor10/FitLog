@@ -92,7 +92,7 @@ def recommend_videos():
 
     # Aggregate user's most logged exercises
     exercises = (
-        db.session.query(Exercise.name, db.func.count(Exercise.id).label("count"))
+        db_session.query(Exercise.name, db.func.count(Exercise.id).label("count"))
         .join(SessionExercise, SessionExercise.exercise_id == Exercise.id)
         .join(Session, Session.id == SessionExercise.session_id)
         .filter(Session.user_id == user_id)  # Filter by user

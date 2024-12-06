@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main Page - FitLog</title>
+    <title>Improvement Page - FitLog</title>
     <link rel="stylesheet" href="/static/css/improv_page.css">
 </head>
 <body>
@@ -35,63 +35,38 @@
                 </div>
             </div>
 
-            <h1 class="video-titles">Meet Your Goals With Fitlog!</h1>
+            <h1 class="video-titles">Improvement Videos</h1>
+            <h2>
+                {% if exercise_name %}
+                    Recommended videos for improving your {{ exercise_name }}:
+                {% else %}
+                    Explore these general fitness videos to meet your goals:
+                {% endif %}
+            </h2>
+
             <div class="thumbnail-grid">
-                <!-- Video 1 -->
+                {% for video in videos %}
                 <div class="video-item">
-                    <a href="https://www.youtube.com/watch?v=oGFmeKD5z-E" target="_blank">
-                        <img src="https://img.youtube.com/vi/oGFmeKD5z-E/hqdefault.jpg" alt="YouTube Video 1">
+                    <a href="{{ video['url'] }}" target="_blank">
+                        <img src="https://img.youtube.com/vi/{{ video['video_id'] }}/hqdefault.jpg" alt="YouTube Video">
                     </a>
-                    <div class="video-title">Glutes Workout Video</div>
-                    <button class="save-button" onclick="saveVideo('oGFmeKD5z-E', 'GluTES Workout Video', 'https://www.youtube.com/watch?v=oGFmeKD5z-E')">Save Video</button>
+                    <div class="video-title">{{ video['title'] }}</div>
+                    <button class="save-button"
+                            data-video-id="{{ video['video_id'] }}"
+                            data-title="{{ video['title'] }}"
+                            data-url="{{ video['url'] }}">
+                        Save Video
+                    </button>
                 </div>
-
-                <!-- Video 2 -->
-                <div class="video-item">
-                    <a href="https://www.youtube.com/watch?v=jjnJHhzZUUM" target="_blank">
-                        <img src="https://img.youtube.com/vi/jjnJHhzZUUM/hqdefault.jpg" alt="YouTube Video 2">
-                    </a>
-                    <div class="video-title">10-Min Morning Yoga</div>
-                    <button class="save-button" onclick="saveVideo('jjnJHhzZUUM', '10-Min Morning Yoga', 'https://www.youtube.com/watch?v=jjnJHhzZUUM')">Save Video</button>
-                </div>
+                {% endfor %}
             </div>
-            <h1 class="video-titles">Exercise Videos</h1>
-            <div class="thumbnail-grid">
-                <!-- Video 1 -->
-                <div class="video-item">
-                    <a href="https://www.youtube.com/watch?v=oGFmeKD5z-E" target="_blank">
-                        <img src="https://img.youtube.com/vi/oGFmeKD5z-E/hqdefault.jpg" alt="YouTube Video 1">
-                    </a>
-                    <div class="video-title">GluTES Workout Video</div>
-                    <button class="save-button" onclick="saveVideo('oGFmeKD5z-E', 'GluTES Workout Video', 'https://www.youtube.com/watch?v=oGFmeKD5z-E')">Save Video</button>
-                </div>
 
-                <!-- Video 2 -->
-                <div class="video-item">
-                    <a href="https://www.youtube.com/watch?v=jjnJHhzZUUM" target="_blank">
-                        <img src="https://img.youtube.com/vi/jjnJHhzZUUM/hqdefault.jpg" alt="YouTube Video 2">
-                    </a>
-                    <div class="video-title">10-Min Morning Yoga</div>
-                    <button class="save-button" onclick="saveVideo('jjnJHhzZUUM', '10-Min Morning Yoga', 'https://www.youtube.com/watch?v=jjnJHhzZUUM')">Save Video</button>
-                </div>
-                <!-- Video 1 -->
-                <div class="video-item">
-                    <a href="https://www.youtube.com/watch?v=oGFmeKD5z-E" target="_blank">
-                        <img src="https://img.youtube.com/vi/oGFmeKD5z-E/hqdefault.jpg" alt="YouTube Video 1">
-                    </a>
-                    <div class="video-title">GluTES Workout Video</div>
-                    <button class="save-button" onclick="saveVideo('oGFmeKD5z-E', 'GluTES Workout Video', 'https://www.youtube.com/watch?v=oGFmeKD5z-E')">Save Video</button>
-                </div>
-
-                <!-- Video 2 -->
-                <div class="video-item">
-                    <a href="https://www.youtube.com/watch?v=jjnJHhzZUUM" target="_blank">
-                        <img src="https://img.youtube.com/vi/jjnJHhzZUUM/hqdefault.jpg" alt="YouTube Video 2">
-                    </a>
-                    <div class="video-title">10-Min Morning Yoga</div>
-                    <button class="save-button" onclick="saveVideo('jjnJHhzZUUM', '10-Min Morning Yoga', 'https://www.youtube.com/watch?v=jjnJHhzZUUM')">Save Video</button>
-                </div>
+            <!-- Fallback if no videos are found -->
+            {% if not videos %}
+            <div class="no-videos">
+                <p>No videos found for this week. Start logging more sessions to get tailored recommendations!</p>
             </div>
+            {% endif %}
         </div>
     </div>
 
