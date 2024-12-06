@@ -6,8 +6,8 @@ from app.utils.write_to_db import write_session_to_db
 from app.database import db_session
 import datetime
 
+session_bp = Blueprint('sessions', __name__)
 
-session_bp = Blueprint('session', __name__)
 
 
 # List Sessions
@@ -66,6 +66,16 @@ def handle_sessions():
         print(f"Error fetching sessions: {str(e)}")
         return "An error occurred while fetching sessions", 500
 
+# Retrieve Exercises
+@session_bp.route('/get_exercises', methods=['GET'])
+def get_exercises():
+    """
+    Retrieve all exercises for populating dropdowns.
+    """
+    exercises = Exercise.query.all()
+    exercise_list = [{"id": exercise.id, "name": exercise.name} for exercise in exercises]
+    return jsonify(exercise_list)
+
 
 # Recommend YouTube videos
 @session_bp.route("/recommend_videos", methods=["GET"])
@@ -95,39 +105,3 @@ def recommend_videos():
     videos = search_youtube_videos(most_logged_category)
 
     return jsonify({"category": most_logged_category, "videos": videos})
-
-
-@session_bp.route("/recommend_videos_by_goal", methods=["GET"])
-def recommend_videos_by_goal():
-    """
-    Recommend YouTube videos based on user's fitness goal.
-    """
-    user_id = request.args.get("user_id")  # Use session or token to identify user
-    if not user_id:
-        return jsonify({"error": "User ID is required"}), 400
-
-    # Fetch the user's goal
-    user = User.query.get(user_id)
-    if not user or not user.goal:
-        return jsonify({"error": "User goal not found"}), 404
-
-    videos = search_youtube_videos(user.goal)
-    return jsonify({"goal": user.goal, "videos": videos})
-
-
-@session_bp.route("/search_exercises", methods=["GET"])
-def search_exercises():
-    """
-    Search exercises by name for autocomplete functionality.
-    """
-    query = request.args.get("q", "").lower()  # User's input
-    if not query:
-        return jsonify([])  # Return empty list if no input
-
-    results = (
-        db_session.query(Exercise)
-        .filter(Exercise.exercise_name.ilike(f"%{query}%"))  # Case-insensitive search
-        .limit(10)  # Return top 10 matches
-        .all()
-    )
-    return jsonify([{"id": e.id, "name": e.exercise_name} for e in results])

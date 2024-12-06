@@ -60,4 +60,6 @@ def register():
         db_session.commit()
         return redirect(url_for('main.login'))
 
+
     return render_template('signup.html')
+

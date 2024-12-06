@@ -1,0 +1,119 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #121212; /* Dark background */
+    color: #e0e0e0; /* Light text for contrast */
+}
+
+/* Main container for the page layout */
+.container.main-page {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Sidebar styles */
+.sidebar {
+    width: 300px;
+    background-color: #1c1c1c;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    max-width: 150px;
+    margin-bottom: 10px;
+}
+
+/* Saved Videos Section */
+.saved-videos {
+    margin-bottom: 20px;
+}
+
+.saved-videos h3 {
+    color: #e0e0e0;
+    margin-bottom: 10px;
+}
+
+.video-box {
+    margin-bottom: 10px;
+    color: #e0e0e0;
+}
+
+/* Main content styles */
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #222;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Navigation bar styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #333;
+    margin-bottom: 20px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 100px; /* Increase spacing between links */
+}
+
+.nav-links a,
+.logout-button a {
+    color: #e0e0e0;
+    text-decoration: none; /* Remove underline from links */
+    transition: color 0.3s;
+    font-size: 1em;
+}
+
+
+.thumbnail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+.thumbnail-grid a {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.thumbnail-grid img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.video-titles {
+    width: 100%;
+    align-items: center;
+    min-width: 0; /* Prevent overflow */
+    position: relative;
+}

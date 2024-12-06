@@ -1,0 +1,65 @@
+/* General reset and base styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #121212; /* Dark background */
+    color: #e0e0e0; /* Light text for contrast */
+}
+
+/* Main content styles */
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #222;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* Navigation bar styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #333;
+    margin-bottom: 20px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 100px; /* Increase spacing between links */
+}
+
+.nav-links a,
+.logout-button a {
+    color: #e0e0e0;
+    text-decoration: none; /* Remove underline from links */
+    transition: color 0.3s;
+    font-size: 1em;
+}
+
+.nav-links a:hover,
+.logout-button a:hover {
+    color: #888; /* Hover effect for links */
+}
+
+/* Stats section styles */
+.stats-section {
+    background-color: #1c1c1c;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.stats-section h2 {
+    margin-bottom: 10px;
+    color: #e0e0e0;
+}
+
+.stats-section p {
+    color: #b0b0b0;
+}
+
