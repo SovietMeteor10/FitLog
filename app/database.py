@@ -8,6 +8,7 @@ engine = create_engine(
     "postgresql://postgres.fqqhfswbaqorcblltgxn:FitLogSSE2425@aws-0-eu-west-2.pooler.supabase.com:6543/postgres"
 )
 
+
 # SessionLocal for creating database sessions
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
@@ -17,6 +18,4 @@ Base.query = db_session.query_property()
 
 
 def init_db():
-    import app.models
-
     Base.metadata.create_all(bind=engine)

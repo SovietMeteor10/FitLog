@@ -4,10 +4,11 @@ from app import db
 from app.utils.youtube_api import search_youtube_videos
 from app.utils.write_to_db import write_session_to_db
 from app.database import db_session
-from sqlalchemy import select
 import datetime
 
+
 session_bp = Blueprint('session', __name__)
+
 
 # List Sessions
 @session_bp.route('/', methods=['GET', 'POST'])
@@ -66,17 +67,6 @@ def handle_sessions():
         return "An error occurred while fetching sessions", 500
 
 
-
-# # Retrieve Exercises
-# @session_bp.route('/get_exercises', methods=['GET'])
-# def get_exercises():
-#     """
-#     Retrieve all exercises for populating dropdowns.
-#     """
-#     exercises = Exercise.query.all()
-#     exercise_list = [{"id": exercise.id, "name": exercise.name} for exercise in exercises]
-#     return jsonify(exercise_list)
-
 # Recommend YouTube videos
 @session_bp.route("/recommend_videos", methods=["GET"])
 def recommend_videos():
@@ -123,19 +113,6 @@ def recommend_videos_by_goal():
 
     videos = search_youtube_videos(user.goal)
     return jsonify({"goal": user.goal, "videos": videos})
-
-# ############
-# @session_bp.route("/addsession", methods=["GET", "POST"])
-# def add_session():
-#     if request.method == "POST":
-#         # Process and save session data
-#         pass
-
-#     # Fetch exercises for the dropdown
-#     exercises = db_session.query(Exercise).all()
-#     db_session.close()
-
-#     return render_template("add_session.html", exercises=exercises)
 
 
 @session_bp.route("/search_exercises", methods=["GET"])

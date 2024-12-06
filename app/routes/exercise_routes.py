@@ -1,7 +1,9 @@
 from flask import Blueprint, jsonify
 from app.models import Exercise
 
+
 exercise_bp = Blueprint('exercise', __name__)
+
 
 @exercise_bp.route('/get_exercises', methods=['GET'])
 def get_exercises():

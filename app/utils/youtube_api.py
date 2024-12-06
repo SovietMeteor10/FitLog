@@ -1,8 +1,10 @@
 from googleapiclient.discovery import build
 
+
 API_KEY = "YOUR_YOUTUBE_API_KEY"
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
+
 
 def search_youtube_videos(query, max_results=5):
     """

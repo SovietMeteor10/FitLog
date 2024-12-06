@@ -2,8 +2,10 @@ import requests
 from app.models import Exercise
 from app.database import db_session
 
+
 EXERCISE_API_URL = "https://exercisedb-api.vercel.app/api/v1/exercises"
-MAX_EXERCISES = 1000 # Limit the number of exercises to fetch
+MAX_EXERCISES = 1000  # Limit the number of exercises to fetch
+
 
 def fetch_exercises_from_api():
     """
@@ -40,6 +42,7 @@ def fetch_exercises_from_api():
             break
 
     return all_exercises[:MAX_EXERCISES]  # Return limited exercises
+
 
 def store_exercises_in_db(exercises):
     """
@@ -89,6 +92,7 @@ def store_exercises_in_db(exercises):
     except Exception as e:
         db_session.rollback()
         print(f"Error storing exercises in the database: {e}")
+
 
 def fetch_and_store_exercises():
     """

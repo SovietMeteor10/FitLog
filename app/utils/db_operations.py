@@ -1,6 +1,7 @@
 from app import db
 from app.models import Session, Exercise, SessionExercise, Set
 
+
 def write_session_to_db(session_data, user_id=1):
     try:
         # 1. Add the session

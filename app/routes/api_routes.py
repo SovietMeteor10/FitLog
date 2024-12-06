@@ -1,13 +1,16 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify
 from app.models import Exercise
 from app.utils.fetch_exercise import fetch_and_store_exercises
 
+
 api_bp = Blueprint('api', __name__)
+
 
 @api_bp.route('/exercises', methods=['GET'])
 def get_exercises():
     exercises = Exercise.query.all()
     return jsonify([{"id": e.exercise_id, "name": e.exercise_name} for e in exercises])
+
 
 @api_bp.route('/fetch_exercises', methods=['POST'])
 def fetch_exercises():
