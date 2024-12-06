@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const newSessionPopup = document.getElementById("new-session-popup");
     const closePopupButton = document.getElementById("close-popup");
     const exercisesContainer = document.getElementById("exercises");
-    const sessionsList = document.getElementById("sessions-list");
     let exerciseCount = 0;
 
     // Add New Session Pop-Up
@@ -28,7 +27,8 @@ document.addEventListener("DOMContentLoaded", function () {
         return `
             <div class="exercise" data-exercise="${exerciseCount}">
                 <label for="exercise_${exerciseCount}">Exercise Name:</label>
-                <input type="text" id="exercise_${exerciseCount}" name="exercise_${exerciseCount}" required>
+                <input type="text" id="exercise_${exerciseCount}" name="exercise_${exerciseCount}" class="exercise-autocomplete" autocomplete="off" required>
+                <ul class="autocomplete-results"></ul>
 
                 <div class="sets">
                     <!-- Sets will be added here -->
@@ -74,6 +74,49 @@ document.addEventListener("DOMContentLoaded", function () {
         $(this).closest('.set').remove();
     });
 
+    // Autocomplete functionality
+    $(document).on('input', '.exercise-autocomplete', function () {
+        const input = $(this);
+        const query = input.val();
+        const resultsList = input.siblings('.autocomplete-results');
+
+        if (query.length > 1) {
+            // Fetch suggestions from the server
+            $.ajax({
+                url: window.location.pathname,  // Sends request to the current route
+                type: 'GET',
+                data: { q: query },
+                success: function (response) {
+                    resultsList.empty();
+                    response.forEach(exercise => {
+                        const listItem = $('<li></li>').text(exercise.name).attr('data-id', exercise.id).addClass('autocomplete-item');
+                        listItem.on('click', function () {
+                            input.val($(this).text());
+                            resultsList.empty(); // Clear suggestions
+                        });
+                        resultsList.append(listItem);
+                    });
+                },
+                error: function () {
+                    resultsList.empty();
+                    resultsList.append('<li class="autocomplete-item">Error fetching suggestions</li>');
+                }
+            });
+        } else {
+            resultsList.empty(); // Clear suggestions for short queries
+        }
+    });
+
+    // Hide suggestions when clicking outside
+    $(document).on('click', function (e) {
+        if (!$(e.target).closest('.exercise-autocomplete, .autocomplete-results').length) {
+            $('.autocomplete-results').empty();
+        }
+    });
+});
+
+
+
     /*// Submit session handler
     document.getElementById("new-session-form").addEventListener("submit", function (event) {
         event.preventDefault(); // Prevent default form submission
@@ -108,4 +151,3 @@ document.addEventListener("DOMContentLoaded", function () {
         // Close the pop-up
         newSessionPopup.style.display = "none";
     });*/
-});

@@ -8,9 +8,10 @@ engine = create_engine(
     "postgresql://postgres.fqqhfswbaqorcblltgxn:FitLogSSE2425@aws-0-eu-west-2.pooler.supabase.com:6543/postgres"
 )
 
-db_session = scoped_session(sessionmaker(autocommit=False,
-                                         autoflush=False,
-                                         bind=engine))
+# SessionLocal for creating database sessions
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+db_session = scoped_session(SessionLocal)
 Base = declarative_base()
 Base.query = db_session.query_property()
 

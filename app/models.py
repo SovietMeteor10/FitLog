@@ -48,6 +48,7 @@ class Exercise(Base):
     exercise_id = Column(Integer, primary_key=True)
     exercise_name = Column(String)
     description = Column(Text)
+    category = Column(String)
 
     session_exercises = relationship("SessionExercise", back_populates="exercise")
 
