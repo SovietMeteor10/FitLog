@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, Float, Boolean, Date, ForeignKey, Text
+from sqlalchemy import Column, Integer, String
+from sqlalchemy import Float, Boolean, Date, ForeignKey, Text
 from sqlalchemy.orm import relationship
 from app.database import Base
 
@@ -40,7 +41,8 @@ class Session(Base):
         self.date = date
 
     user = relationship("User", back_populates="sessions")
-    session_exercises = relationship("SessionExercise", back_populates="session")
+    session_exercises = relationship(
+        "SessionExercise", back_populates="session")
 
 
 class Exercise(Base):
@@ -51,7 +53,8 @@ class Exercise(Base):
     description = Column(Text)
     category = Column(String)
 
-    session_exercises = relationship("SessionExercise", back_populates="exercise")
+    session_exercises = relationship(
+        "SessionExercise", back_populates="exercise")
 
 
 class SessionExercise(Base):

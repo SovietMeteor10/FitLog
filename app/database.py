@@ -5,7 +5,8 @@ from sqlalchemy.orm import scoped_session, sessionmaker, declarative_base
 
 os.environ["PGGSSENCMODE"] = "disable"
 engine = create_engine(
-    "postgresql://postgres.fqqhfswbaqorcblltgxn:FitLogSSE2425@aws-0-eu-west-2.pooler.supabase.com:6543/postgres"
+    "postgresql://postgres.fqqhfswbaqorcblltgxn:FitLogSSE2425@aws\
+        -0-eu-west-2.pooler.supabase.com:6543/postgres"
 )
 
 
