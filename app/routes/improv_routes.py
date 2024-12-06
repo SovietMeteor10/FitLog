@@ -7,6 +7,7 @@ import datetime
 
 improv_bp = Blueprint('improvement', __name__)
 
+
 @improv_bp.route('/', methods=['GET'])
 def improv():
     try:
@@ -25,7 +26,6 @@ def improv():
             Session.date.between(start_date, end_date),
             Session.user_id == user_id
         ).all()
-        
         # Extract session IDs into a list
         session_ids = [s[0] for s in session_ids]  # Unpacking the tuples
 
@@ -36,14 +36,14 @@ def improv():
         # Query the most logged exercise in these sessions
         most_logged_exercise = db_session.query(
             Exercise.exercise_name, func.count(SessionExercise.exercise_id).label("count")
-        ).join(SessionExercise, Exercise.exercise_id == SessionExercise.exercise_id
-        ).filter(
-            SessionExercise.session_id.in_(session_ids)
-        ).group_by(
-            Exercise.exercise_name
-        ).order_by(
-            func.count(SessionExercise.exercise_id).desc()
-        ).first()
+            ).join(SessionExercise, Exercise.exercise_id == SessionExercise.exercise_id
+            ).filter(
+                SessionExercise.session_id.in_(session_ids)
+            ).group_by(
+                Exercise.exercise_name
+            ).order_by(
+                func.count(SessionExercise.exercise_id).desc()
+            ).first()
 
         # If no exercises are found, provide a default suggestion
         exercise_name = most_logged_exercise[0] if most_logged_exercise else None
