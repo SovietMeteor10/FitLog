@@ -54,6 +54,7 @@ def register():
 
     return render_template('signup.html')
 
+
 def login_required(view):
     @functools.wraps(view)
     def wrapped_view(**kwargs):
