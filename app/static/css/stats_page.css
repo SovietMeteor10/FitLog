@@ -1,7 +1,23 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+}
+
 .container {
     display: flex;
     flex-direction: row;
-    height: 100vh;
+    height: 100%;
+}
+
+.dashobard-container {
+    display: flex;
+    flex-direction: column;
+    height: 60vh;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .sidebar {
@@ -12,6 +28,7 @@
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    margin-bottom:20px;
 }
 
 .logo {
@@ -28,16 +45,18 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+    background-color: #333;
+    padding: 20px;
 }
 
 .nav-links a {
     margin-right: 15px;
     text-decoration: none;
-    color: #333;
+    color: #e0e0e0;
 }
 
 .logout-link {
-    color: red;
+    color: #e0e0e0;
     text-decoration: none;
 }
 
@@ -46,15 +65,50 @@
     flex-direction: column;
 }
 
-.videos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 10px;
+.top-section {
+    display: flex;
+    gap: 0px;
+    margin-bottom: 10px;
+    width: 100%;
+    justify-content: space-between; /* Ensures equal space distribution */
 }
 
-.video-placeholder {
-    background-color: #f4f4f4;
+.graph-container {
+    flex: 1;
+    background-color: #333;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 0; /* Prevent overflow */
+    position: relative;
+}
+
+.top-section .graph-container {
+    max-width: 49.5%; /* Ensures each graph takes up 48% of the width */
+}
+
+/* Ensures the graph fits the container */
+.graph-container > div {
+    width: 100%;
+    height: 100%;
+}
+
+.bottom-section {
+    flex: 1;
+    background-color: #333;
+    border-radius: 8px; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 100%;
+    padding-bottom: 20px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+h2 {
     text-align: center;
-    padding: 10px;
-    border: 1px solid #ccc;
+    margin: 10px 0;
+    color: #e0e0e0;
 }

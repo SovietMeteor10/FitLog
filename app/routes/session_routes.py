@@ -7,7 +7,7 @@ from app.database import db_session
 from sqlalchemy import select
 import datetime
 
-session_bp = Blueprint('session', __name__)
+session_bp = Blueprint('sessions', __name__)
 
 # List Sessions
 @session_bp.route('/', methods=['GET', 'POST'])
@@ -54,8 +54,6 @@ def handle_sessions():
         # Log the error for debugging
         print(f"Error fetching sessions: {str(e)}")
         return "An error occurred while fetching sessions", 500
-
-
 
 # Retrieve Exercises
 @session_bp.route('/get_exercises', methods=['GET'])

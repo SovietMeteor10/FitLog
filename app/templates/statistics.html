@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stats Page - FitLog</title>
     <link rel="stylesheet" href="/static/css/stats_page.css"> <!-- Link to CSS file for consistent theme -->
+    <!-- Include Plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
     <div class="container stats-page">
@@ -21,32 +23,34 @@
             <!-- Navigation Bar -->
             <div class="navbar">
                 <div class="nav-links">
-                    <a href="/index">Main</a>
+                    <a href="/index">Home</a>
                     <a href="/sessions">Sessions</a>
+                    <a href="/profile">Profile</a>
                 </div>
                 <a href="/logout" class="logout-link">Logout</a> <!-- Logout button to the far right -->
             </div>
 
-            <!-- Stats Content -->
-            <div class="stats-section">
-                <div class="recent-stats">
-                    <h3>Recent Stats</h3>
-                    <!-- Placeholder for charts populated with backend data -->
-                    <canvas id="recentStatsChart"></canvas>
+            <!-- Stats Content --> 
+            <div class="dashboard_container">
+                <!-- Top Section -->
+                <div class="top-section">
+                    <!-- Radial Graph (Top Left) -->
+                    <div class="graph-container">
+                        <h2>Muscle Group Distribution</h2>
+                        {{ radial_graph|safe }}
+                    </div>
+                    
+                    <!-- Line Graph (Top Right) -->
+                    <div class="graph-container">
+                        <h2>Performance Trend</h2>
+                        {{ line_graph|safe }}
+                    </div>
                 </div>
-
-                <!-- Recommended Videos Section -->
-                <div class="recommended-videos">
-                    <h3>Recommended Videos</h3>
-                    <ul id="video-list">
-                        <!-- Videos will be dynamically populated here -->
-                    </ul>
-                </div>
-
-                <div class="heat-map">
-                    <h3>Heat Map</h3>
-                    <!-- Placeholder for the heatmap -->
-                    <canvas id="heatMapCanvas"></canvas>
+                
+                <!-- Bottom Section - Heat Map -->
+                <div class="bottom-section">
+                    <h2>Activity Heatmap</h2>
+                    {{ heatmap|safe }}
                 </div>
             </div>
         </div>
