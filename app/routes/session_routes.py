@@ -4,10 +4,11 @@ from app import db
 from app.utils.youtube_api import search_youtube_videos
 from app.utils.write_to_db import write_session_to_db
 from app.database import db_session
-from sqlalchemy import select
 import datetime
 
 session_bp = Blueprint('sessions', __name__)
+
+
 
 # List Sessions
 @session_bp.route('/', methods=['GET', 'POST'])
@@ -21,14 +22,12 @@ def handle_sessions():
             ),
             'Exercises': {}
         }
-        # Process form data
         exercise_inputs = [k for k in request.form.keys()
                            if k.startswith('exercise_')]
         for exercise_input in exercise_inputs:
             exercise_id = exercise_input.split('_')[1]
             exercise_name = request.form.get(f'exercise_{exercise_id}')
             session_data['Exercises'][exercise_name] = []
-            # Get all sets for this exercise
             set_count = 1
             while True:
                 weight = request.form.get(f'weight_{exercise_id}_{set_count}')
@@ -39,19 +38,31 @@ def handle_sessions():
                     float(weight), int(reps)
                 ))
                 set_count += 1
-        # Here you would typically save session_data to your database
         write_session_to_db(session_data, user_id=session.get("user_id"))
+
+    elif request.method == 'GET' and 'q' in request.args:
+        # Handle the exercise search functionality
+        query = request.args.get('q', '').lower()
+        if not query:
+            return jsonify([])
+
+        results = (
+            db_session.query(Exercise)
+            .filter(Exercise.exercise_name.ilike(f"%{query}%"))
+            .limit(10)
+            .all()
+        )
+        return jsonify([{"id": e.exercise_id, "name": e.exercise_name} for e in results])
 
     try:
         sessions = Session.query.all()
         session_data = [
             {"date": s.date, "session_name": s.session_name}
             for s in sessions
-            if s.user_id == session.get("user_id") #here
+            if s.user_id == session.get("user_id")
         ]
         return render_template('sessions.html', sessions=session_data)
     except Exception as e:
-        # Log the error for debugging
         print(f"Error fetching sessions: {str(e)}")
         return "An error occurred while fetching sessions", 500
 
@@ -64,6 +75,7 @@ def get_exercises():
     exercises = Exercise.query.all()
     exercise_list = [{"id": exercise.id, "name": exercise.name} for exercise in exercises]
     return jsonify(exercise_list)
+
 
 # Recommend YouTube videos
 @session_bp.route("/recommend_videos", methods=["GET"])

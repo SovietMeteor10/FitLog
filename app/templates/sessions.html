@@ -37,6 +37,7 @@
                     </tr>
                 </thead>
                 <tbody id="sessions-list">
+
                 {% for session in sessions %}
                 <tr>
                      <td>{{ session.date }}</td>
@@ -48,10 +49,10 @@
         </div>
     </div>
 
-    <!-- Add New Session Pop-Up (Consolidated Version) -->
+    <!-- Add New Session Pop-Up -->
     <div id="new-session-popup" class="popup-container">
         <div class="popup-content">
-            <button id="close-popup" class="close-button">X</button> <!-- Close button -->
+            <button id="close-popup" class="close-button">X</button>
             <h3 class="popup-title">Add New Session</h3>
             <form method="POST" id="new-session-form">
                 <div class="form-group">
@@ -65,15 +66,15 @@
                 </div>
 
                 <div id="exercises" class="form-group">
-                    <!-- Initial exercise will be added here -->
+                    <!-- Dynamically added exercises will appear here -->
                 </div>
+
                 <button type="button" id="add_exercise" class="form-button add-exercise-button">Add Exercise</button>
                 <button type="submit" class="form-button submit-button">Submit</button>
             </form>
         </div>
     </div>
 
-    <script src="/static/js/sessions.js"></script> <!-- Link to JavaScript file -->
+    <script src="/static/js/sessions.js"></script>
 </body>
-
 </html>

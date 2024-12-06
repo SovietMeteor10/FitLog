@@ -4,14 +4,14 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from flask_login import LoginManager
 
-
 # Initialize Flask extensions
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 jwt = JWTManager()
-login_manager = LoginManager()  # Use snake_case for consistency
-login_manager.login_view = "main.login"  # Redirect here if not authenticated
-login_manager.login_message = "Please log in to access this page."  # Default login message
+login_manager = LoginManager()
+login_manager.login_view = "main.login"
+login_manager.login_message = "Please log in to access this page."
+
 
 def create_app():
     app = Flask(__name__)
@@ -23,15 +23,27 @@ def create_app():
     jwt.init_app(app)
     login_manager.init_app(app)
 
-
     # User loader function for Flask-Login
     @login_manager.user_loader
     def load_user(user_id):
-        from app.models import User  # Import User model
-        return User.query.get(int(user_id))  # Fetch user by ID
+        from app.models import User
+
+        return User.query.get(int(user_id))
 
     # Register blueprints
-    from app.routes import register_blueprints
+    from app.routes import register_blueprints  # Delay import
+
     register_blueprints(app)
+
+    # Fetch exercises from API after app context is ready
+    with app.app_context():
+        try:
+            from app.database import SessionLocal
+
+            db_session = SessionLocal()
+            # fetch_and_store_exercises()
+            db_session.close()
+        except Exception as e:
+            print(f"Error fetching exercises: {e}")
 
     return app

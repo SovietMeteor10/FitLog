@@ -2,8 +2,9 @@ from sqlalchemy import Column, Integer, String, Float, Boolean, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from app.database import Base
 
+
 class User(Base):
-    __tablename__ = 'users'
+    __tablename__ = "users"
 
     user_id = Column(Integer, primary_key=True)
     email_address = Column(String)
@@ -26,10 +27,10 @@ class User(Base):
 
 
 class Session(Base):
-    __tablename__ = 'sessions'
+    __tablename__ = "sessions"
 
     session_id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('users.user_id'))
+    user_id = Column(Integer, ForeignKey("users.user_id"))
     session_name = Column(String)
     date = Column(Date)
 
@@ -43,21 +44,22 @@ class Session(Base):
 
 
 class Exercise(Base):
-    __tablename__ = 'exercises'
+    __tablename__ = "exercises"
 
     exercise_id = Column(Integer, primary_key=True)
     exercise_name = Column(String)
     description = Column(Text)
+    category = Column(String)
 
     session_exercises = relationship("SessionExercise", back_populates="exercise")
 
 
 class SessionExercise(Base):
-    __tablename__ = 'sessions_exercises'
+    __tablename__ = "sessions_exercises"
 
     session_exercise_id = Column(Integer, primary_key=True)
-    session_id = Column(Integer, ForeignKey('sessions.session_id'))
-    exercise_id = Column(Integer, ForeignKey('exercises.exercise_id'))
+    session_id = Column(Integer, ForeignKey("sessions.session_id"))
+    exercise_id = Column(Integer, ForeignKey("exercises.exercise_id"))
 
     session = relationship("Session", back_populates="session_exercises")
     exercise = relationship("Exercise", back_populates="session_exercises")
@@ -65,10 +67,12 @@ class SessionExercise(Base):
 
 
 class Set(Base):
-    __tablename__ = 'sets'
+    __tablename__ = "sets"
 
     set_id = Column(Integer, primary_key=True)
-    session_exercise_id = Column(Integer, ForeignKey('sessions_exercises.session_exercise_id'))
+    session_exercise_id = Column(
+        Integer, ForeignKey("sessions_exercises.session_exercise_id")
+    )
     reps = Column(Integer)
     weight = Column(Float)
     set_number = Column(Integer)

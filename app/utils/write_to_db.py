@@ -1,6 +1,7 @@
 from app.database import db_session
 from app.models import Session, Exercise, SessionExercise, Set
 
+
 def write_session_to_db(session_data, user_id=1):
     new_session = Session(
         user_id=user_id,
@@ -42,7 +43,3 @@ def write_session_to_db(session_data, user_id=1):
             )
             db_session.add(new_set)
             db_session.commit()
-
-
-
-

@@ -10,3 +10,4 @@ def register_blueprints(app):
     app.register_blueprint(api_bp, url_prefix="/api")
     app.register_blueprint(stats_bp, url_prefix="/statistics")
     app.register_blueprint(improv_bp, url_prefix="/improvement")
+

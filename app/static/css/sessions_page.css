@@ -167,3 +167,34 @@ body, html {
 .close-button:hover {
     background-color: #555;
 }
+
+/* Search Results Styles */
+#search_results {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0 0 0;
+    border: 1px solid #333;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #1c1c1c;
+    position: absolute;
+    width: 90%;
+    border-radius: 5px;
+    z-index: 20;
+}
+
+#search_results li {
+    padding: 10px;
+    cursor: pointer;
+    color: #e0e0e0;
+    border-bottom: 1px solid #333;
+}
+
+#search_results li:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+#search_results li:last-child {
+    border-bottom: none;
+}

@@ -1,18 +1,21 @@
-from flask import Blueprint, request, jsonify, redirect, render_template, url_for, flash, session
-from flask_login import login_user, logout_user, login_required, current_user
-from app.models import User, Exercise
+from flask import Blueprint, request, redirect, render_template, url_for, flash, session
+from flask_login import logout_user, login_required, current_user
+from app.models import User
 from app.database import db_session
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 main_bp = Blueprint('main', __name__)
+
 
 @main_bp.route('/index')
 def index():
     # Pass the logged in user to the index template
-    return render_template('index.html', user = current_user)
+    return render_template('index.html', user=current_user)
+
 
 # ---------- AUTH ROUTES ----------
-#Login route
+# Login route
 @main_bp.route('/', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -22,7 +25,7 @@ def login():
         user = User.query.filter_by(email_address=email_address).first()
         if user is None:
             error = 'Invalid email address.'
-        elif not check_password_hash(user.password, password): #Make this secure
+        elif not check_password_hash(user.password, password):  # Make this secure
             error = 'Invalid password.'
 
         if error is None:
@@ -34,12 +37,14 @@ def login():
 
     return render_template('login.html')
 
+
 @main_bp.route('/logout')
 @login_required  # Only logged-in users can access this route
 def logout():
     logout_user()  # Log the user out
     flash("You have been logged out.", "info")
     return redirect(url_for('main.login'))
+
 
 @main_bp.route("/register", methods=["GET", "POST"])
 def register():
@@ -55,4 +60,6 @@ def register():
         db_session.commit()
         return redirect(url_for('main.login'))
 
+
     return render_template('signup.html')
+

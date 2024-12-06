@@ -51,10 +51,11 @@ def get_radial_graph():
 
     # Example data: Replace this with your own data fetching
     labels = ["Arms", "Upper Leg", "Lower Leg", "Chest", "Back", "Abs", "Glutes", "Arms"]
-    values = [5, 10, 7, 8, 9, 6, 4, 5] #remember to put the last value twice!
+
+    values = [5, 10, 7, 8, 9, 6, 4, 5]  # remember to put the last value twice!
 
     return labels, values
- 
+
 def line_graph():
 
     result = get_line_graph_data()
@@ -62,11 +63,12 @@ def line_graph():
         print("No data returned from get_line_graph_data")
         return None
     dataX, dataY = result
-    
+
     fig = go.Figure(data=go.Scatter(x=dataX, y=dataY, mode='lines+markers'))
     fig.update_layout(
         xaxis_title="X Axis",
         yaxis_title="Y Axis",
+
         modebar_remove=['zoom', 'pan', 'select', 'zoomIn', 'zoomOut', 'resetScale', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toImage', 'autoscale','lasso2d'],
         plot_bgcolor='#333',  # Background color of the plot area
         paper_bgcolor='#333',  # Background color of the entire figure
@@ -136,7 +138,7 @@ def heat_map():
 
         # Return the heatmap as HTML
         return fig.to_html(full_html=False)
-    
+
     else:
         print("Data is not a DataFrame!")
         return ""
@@ -159,7 +161,9 @@ def radial_graph():
             bgcolor='#1e1e1e',
         ),
         showlegend=False,
+
         modebar_remove=['zoom', 'pan', 'select', 'zoomIn', 'zoomOut', 'resetScale', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toImage', 'autoscale','lasso2d'],
+
         plot_bgcolor='#333',  # Background color of the plot area
         paper_bgcolor='#333',  # Background color of the entire figure
         font=dict(
@@ -167,3 +171,4 @@ def radial_graph():
         )
     )
     return fig.to_html(full_html=False)
+
