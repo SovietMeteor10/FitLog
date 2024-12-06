@@ -3,7 +3,9 @@ import pandas as pd
 import plotly.graph_objects as go
 import numpy as np
 
+
 stats_bp = Blueprint('statistics', __name__)
+
 
 @stats_bp.route('/', methods=['GET'])
 def statistics():
@@ -12,33 +14,35 @@ def statistics():
     radial_graph_html = radial_graph()
     return render_template('statistics.html', line_graph=line_graph_html, heatmap=heatmap_html, radial_graph=radial_graph_html)
 
-### WE NEED NEW QUERIES IN THESE FUNCTIONS ###
+# WE NEED NEW QUERIES IN THESE FUNCTIONS ###
+
 
 def get_line_graph_data():
-    #run a query to get the time series data from the fields that we pass in to this function
-    
-    #fake data for now:
+    # run a query to get the time series data from the fields that we pass in to this function
+
+    # fake data for now:
     dataX = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
     dataY = np.random.randint(0, 5, size=len(dataX))
     return dataX, dataY
 
+
 def get_heat_map_data():
     # Generate a date range for the entire year of 2024
     date_range = pd.date_range(start="2024-01-01", end="2024-12-31", freq='D')
-    
+
     # Generate random values for each date (you can adjust the range as needed)
     values = np.random.randint(0, 2, size=len(date_range))  # Random values between 0 and 1
-    
+
     # Create a DataFrame
     df = pd.DataFrame({'date': date_range, 'value': values})
-    
+
     # Ensure that the 'date' column exists and is in datetime format
     df['date'] = pd.to_datetime(df['date'])
-    
+
     # Add additional columns for day of the week and week of the year
     df['day_of_week'] = df['date'].dt.weekday  # Monday=0, Sunday=6
     df['week_of_year'] = df['date'].dt.isocalendar().week
-    
+
     # Aggregate the data by taking the mean for duplicate combinations
     df_aggregated = df.groupby(['day_of_week', 'week_of_year'])['value'].mean().reset_index()
 
@@ -46,6 +50,7 @@ def get_heat_map_data():
     heatmap_data = df_aggregated.pivot(index='day_of_week', columns='week_of_year', values='value').fillna(0)
 
     return heatmap_data
+
 
 def get_radial_graph():
 
@@ -56,8 +61,8 @@ def get_radial_graph():
 
     return labels, values
 
-def line_graph():
 
+def line_graph():
     result = get_line_graph_data()
     if not result:
         print("No data returned from get_line_graph_data")
@@ -69,7 +74,7 @@ def line_graph():
         xaxis_title="X Axis",
         yaxis_title="Y Axis",
 
-        modebar_remove=['zoom', 'pan', 'select', 'zoomIn', 'zoomOut', 'resetScale', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toImage', 'autoscale','lasso2d'],
+        modebar_remove=['zoom', 'pan', 'select', 'zoomIn', 'zoomOut', 'resetScale', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toImage', 'autoscale', 'lasso2d'],
         plot_bgcolor='#333',  # Background color of the plot area
         paper_bgcolor='#333',  # Background color of the entire figure
         font=dict(
@@ -80,6 +85,7 @@ def line_graph():
     )
 
     return fig.to_html(full_html=False)
+
 
 def heat_map():
 
@@ -143,6 +149,7 @@ def heat_map():
         print("Data is not a DataFrame!")
         return ""
 
+
 def radial_graph():
     labels, values = get_radial_graph()
     fig = go.Figure()
@@ -162,7 +169,7 @@ def radial_graph():
         ),
         showlegend=False,
 
-        modebar_remove=['zoom', 'pan', 'select', 'zoomIn', 'zoomOut', 'resetScale', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toImage', 'autoscale','lasso2d'],
+        modebar_remove=['zoom', 'pan', 'select', 'zoomIn', 'zoomOut', 'resetScale', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toImage', 'autoscale', 'lasso2d'],
 
         plot_bgcolor='#333',  # Background color of the plot area
         paper_bgcolor='#333',  # Background color of the entire figure
@@ -171,4 +178,3 @@ def radial_graph():
         )
     )
     return fig.to_html(full_html=False)
-

@@ -1,13 +1,13 @@
 from flask import Blueprint, jsonify, render_template, request, session
-from app.models import Session, Exercise, SessionExercise, User
+from app.models import Session, Exercise, SessionExercise
 from app import db
 from app.utils.youtube_api import search_youtube_videos
 from app.utils.write_to_db import write_session_to_db
 from app.database import db_session
 import datetime
 
-session_bp = Blueprint('sessions', __name__)
 
+session_bp = Blueprint('sessions', __name__)
 
 
 # List Sessions
@@ -65,6 +65,7 @@ def handle_sessions():
     except Exception as e:
         print(f"Error fetching sessions: {str(e)}")
         return "An error occurred while fetching sessions", 500
+
 
 # Retrieve Exercises
 @session_bp.route('/get_exercises', methods=['GET'])
