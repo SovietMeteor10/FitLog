@@ -1,0 +1,131 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #1c1c1c;
+    color: #333;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Navigation bar styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin-bottom: 10px;
+    background-color: #1c1c1c;
+    align-items: center;
+    border-bottom: 1px solid #333;
+}
+
+.nav-links {
+    display: flex;
+    gap: 100px; /* Increase spacing between links */
+}
+
+.nav-links a {
+    color: #e0e0e0;
+    text-decoration: none; /* Remove underline from links */
+    font-size: 1em;
+}
+
+.logout-link {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding-right:10px;
+}
+
+/* Form Container Styles */
+.form-container {
+    background-color: #1c1c1c;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    flex: 1;
+    margin-right: 20px;
+    border: 1px solid #333;
+    color: #e0e0e0;
+}
+
+/* Form Layout: Two Columns */
+#profile-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
+    gap: 25px;
+}
+
+.form-group-box {
+    display: contents; /* To ensure proper alignment */
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+input,
+select {
+    padding: 8px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[readonly] {
+    background-color: #f9f9f9;
+    cursor: not-allowed;
+}
+
+button {
+    padding: 10px 15px;
+    font-size: 1em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Submit and Delete Button Styles */
+.form-button {
+    background-color: #1c1c1c;
+    color: #e0e0e0;
+    transition: background-color 0.3s;
+    grid-column: span 2; /* Stretch button across two columns */
+    text-align: center;
+    margin-top: 20px;
+    border: 1px solid #333;
+}
+
+.form-button:hover {
+    background-color: #27ae60;
+}
+
+.delete-button {
+    background-color: #1c1c1c;
+}
+
+.delete-button:hover {
+    background-color: #c0392b;
+}
+
+.spaced-buttons {
+    display: flex;
+    justify-content: space-between;
+}

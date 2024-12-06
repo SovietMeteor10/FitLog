@@ -1,22 +1,181 @@
-/* General Styles */
-body {
+/* General reset and base styles */
+body, html {
     margin: 0;
+    padding: 0;
+    height: 100%;
     font-family: Arial, sans-serif;
-    background-color: #1c1c1c;
-    color: #333;
+    background-color: #1c1c1c; /* Dark background */
+    color: #e0e0e0; /* Light text for contrast */
 }
 
+/* Container for the full page layout */
 .container {
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 20px;
+    height: 100vh;
+    overflow: hidden;
 }
 
-h2 {
-    text-align: center;
-    margin-bottom: 20px;
+/* Form container styles */
+.form-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #1c1c1c; /* Darker background for form section */
+    padding: 20px;
+    max-width: 500px;
 }
+
+/* Full logo container */
+.image-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.full-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Headings and text styles */
+.form-container h2 {
+    margin-bottom: 10px;
+    color: #e0e0e0;
+}
+
+.form-container p {
+    margin-bottom: 20px;
+    color: #b0b0b0;
+}
+
+/* Form group styles */
+.form-group {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background-color: #333;
+    color: #e0e0e0;
+}
+
+.form-group input::placeholder {
+    color: #888;
+}
+
+/* Button styles */
+.form-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-button:hover {
+    background-color: #555;
+}
+
+/* Sign-in link styles */
+.signin-link {
+    margin-top: 20px;
+    color: #888;
+}
+
+.signin-link a {
+    color: #ccc;
+    text-decoration: underline;
+}
+
+/* Terms and Conditions Button styles */
+.terms-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: #444;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.terms-button:hover {
+    background-color: #555;
+}
+
+/* Message styles */
+.message {
+    margin-top: 20px;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+/* Container for the full page layout */
+.container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Image container styles */
+.image-container {
+    flex: 1;
+    background: #1c1c1c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-container img.full-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+/* Form container styles */
+.form-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #333; /* Dark theme for consistency */
+    padding: 20px;
+    max-width: 500px;
+    margin: auto;
+    color: #f0f0f0;
+}
+
+/* Button container for spacing between buttons */
+.button-container {
+    margin-top: 10px; /* Add spacing between submit and delete buttons */
+}
+
 
 /* Navigation bar styling */
 .navbar {
@@ -47,96 +206,9 @@ h2 {
     padding-right:10px;
 }
 
-/* Form Container Styles */
-.form-container {
-    background-color: #1c1c1c;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    flex: 1;
-    margin-right: 20px;
-    border: 1px solid #333;
-    color: #e0e0e0;
-}
-
-/* Form Layout: Two Columns */
-#profile-form {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Two columns */
-    gap: 25px;
-}
-
 .form-group-box {
-    display: contents; /* To ensure proper alignment */
-}
-
-.form-group {
-    display: flex;
-    flex-direction: column;
-}
-
-label {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    font-weight: bold;
-}
-
-input,
-select {
-    padding: 8px;
-    font-size: 1em;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-input[readonly] {
-    background-color: #f9f9f9;
-    cursor: not-allowed;
-}
-
-button {
-    padding: 10px 15px;
-    font-size: 1em;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-/* Submit and Delete Button Styles */
-.form-button {
-    background-color: #1c1c1c;
-    color: #e0e0e0;
-    transition: background-color 0.3s;
-    grid-column: span 2; /* Stretch button across two columns */
-    text-align: center;
-    margin-top: 20px;
-    border: 1px solid #333;
-}
-
-.form-button:hover {
-    background-color: #27ae60;
-}
-
-.delete-button {
-    background-color: #1c1c1c;
-    margin-top: 10px;
-}
-
-.delete-button:hover {
-    background-color: #c0392b;
-}
-
-/* Image Container Styles */
-.image-container {
-    max-width: 300px;
-    flex: 1;
-    text-align: center;
-}
-
-.image-container img {
     width: 100%;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    height: 100%;
 }
