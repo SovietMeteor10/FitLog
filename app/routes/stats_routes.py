@@ -3,7 +3,9 @@ import pandas as pd
 import plotly.graph_objects as go
 import numpy as np
 
+
 stats_bp = Blueprint('statistics', __name__)
+
 
 @stats_bp.route('/', methods=['GET'])
 def statistics():
@@ -13,6 +15,7 @@ def statistics():
     return render_template('statistics.html', line_graph=line_graph_html, heatmap=heatmap_html, radial_graph=radial_graph_html)
 
 # WE NEED NEW QUERIES IN THESE FUNCTIONS ###
+
 
 def get_line_graph_data():
     # run a query to get the time series data from the fields that we pass in to this function
@@ -175,4 +178,3 @@ def radial_graph():
         )
     )
     return fig.to_html(full_html=False)
-
