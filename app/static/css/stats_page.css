@@ -2,7 +2,7 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #121212;
+    background-color: #1c1c1c;
     color: #e0e0e0;
 }
 
@@ -10,7 +10,7 @@ body {
     width: 100%;
     margin: 0 auto;
     font-family: Arial, sans-serif;
-    background-color: #121212;
+    background-color: #1c1c1c;
 }
 
 /* Stats page layout */
@@ -25,8 +25,9 @@ body {
     justify-content: space-between;
     padding: 20px;
     margin-bottom: 10px;
-    background-color: #333;
+    background-color: #1c1c1c;
     align-items: center;
+    border-bottom: 1px solid #333;
 }
 
 .nav-links {
@@ -62,10 +63,11 @@ body {
 }
 
 .graph-container {
-    background-color: #333;
+    background-color: #1c1c1c;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #333;
 }
 
 .graph-container h2 {
@@ -75,10 +77,11 @@ body {
 
 /* Bottom Section: one slot */
 .bottom-section {
-    background-color: #333;
+    background-color: #1c1c1c;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #333;
 }
 
 .bottom-section h2 {
@@ -98,4 +101,26 @@ body {
     display: flex;
     justify-content: space-between;
     
+}
+
+.stats-panel {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top:20px;
+}
+
+.data-entry {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.h2 {
+    font-size: 24px;
+}
+
+.dashboard_container {
+    margin-left: 10px;
+    margin-left: 10px;
 }

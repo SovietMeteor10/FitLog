@@ -75,8 +75,8 @@ def line_graph():
         yaxis_title="Y Axis",
 
         modebar_remove=['zoom', 'pan', 'select', 'zoomIn', 'zoomOut', 'resetScale', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toImage', 'autoscale', 'lasso2d'],
-        plot_bgcolor='#333',  # Background color of the plot area
-        paper_bgcolor='#333',  # Background color of the entire figure
+        plot_bgcolor='#1c1c1c',  # Background color of the plot area
+        paper_bgcolor='#1c1c1c',  # Background color of the entire figure
         font=dict(
             color='white',  # Text color
         ),
@@ -120,8 +120,8 @@ def heat_map():
             dragmode=False,
             clickmode='none',
             modebar_remove=['zoom', 'pan', 'select', 'zoomIn', 'zoomOut', 'resetScale', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toImage', 'autoscale'],
-            plot_bgcolor='#333',  # Background color of the plot area
-            paper_bgcolor='#333',
+            plot_bgcolor='#1c1c1c',  # Background color of the plot area
+            paper_bgcolor='#1c1c1c',
             font=dict(
                 family='Arial',  # Font family for text
                 size=14,  # Font size
@@ -165,14 +165,14 @@ def radial_graph():
     fig.update_layout(
         polar=dict(
             radialaxis=dict(visible=False, range=[0, max(values)]),
-            bgcolor='#1e1e1e',
+            bgcolor='#1c1c1c',
         ),
         showlegend=False,
 
         modebar_remove=['zoom', 'pan', 'select', 'zoomIn', 'zoomOut', 'resetScale', 'hoverClosestCartesian', 'hoverCompareCartesian', 'toImage', 'autoscale', 'lasso2d'],
 
-        plot_bgcolor='#333',  # Background color of the plot area
-        paper_bgcolor='#333',  # Background color of the entire figure
+        plot_bgcolor='#1c1c1c',  # Background color of the plot area
+        paper_bgcolor='#1c1c1c',  # Background color of the entire figure
         font=dict(
             color='white',  # Text color
         )
