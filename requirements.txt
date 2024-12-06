@@ -14,7 +14,7 @@ psycopg2-binary==2.9.10
 google-api-python-client==2.154.0
 pytest==8.3.3
 flake8==6.1.0
-black==23.7.0
+black==24.3.0
 python-dotenv==1.0.1
 requests==2.32.3
 plotly==5.23.0
