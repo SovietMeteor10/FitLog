@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sessions - FitLog</title>
+    <link rel="stylesheet" href="/static/css/sessions_page.css"> <!-- Link to CSS file -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Adding jQuery -->
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <img src="/static/images/fitlog_logo.jpg" alt="FitLog Logo" class="logo">
+            <h1>FITLOG</h1>
+        </div>
+
+        <!-- Navigation Bar -->
+        <div class="navbar">
+            <div class="nav-links">
+                <a href="/index">Main</a>
+                <a href="/statistics">Statistics</a>
+                <a href="/profile">Profile</a>
+            </div>
+        </div>
+
+        <div class="sessions-container">
+            <h2>Your Sessions</h2>
+            <button id="add-new-session" class="form-button">Add New Session</button>
+
+            <table class="sessions-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Session</th>
+                    </tr>
+                </thead>
+                <tbody id="sessions-list">
+                    {% for session in sessions %}
+                    <tr>
+                        <td>{{ session.date }}</td>
+                        <td>{{ session.session_name }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add New Session Pop-Up -->
+    <div id="new-session-popup" class="popup-container">
+        <div class="popup-content">
+            <button id="close-popup" class="close-button">X</button>
+            <h3 class="popup-title">Add New Session</h3>
+            <form method="POST" id="new-session-form">
+                <div class="form-group">
+                    <label for="session_name">Session Name:</label>
+                    <input type="text" id="session_name" name="session_name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+
+                <div id="exercises" class="form-group">
+                    <!-- Dynamically added exercises will appear here -->
+                </div>
+
+                <button type="button" id="add_exercise" class="form-button add-exercise-button">Add Exercise</button>
+                <button type="submit" class="form-button submit-button">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/static/js/sessions.js"></script>
+</body>
+</html>

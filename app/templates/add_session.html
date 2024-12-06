@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Session</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .exercise { margin: 20px 0; padding: 10px; border: 1px solid #ccc; }
+        .set { margin: 10px 0; }
+        label { margin-right: 10px; }
+        input, select { margin-right: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Add Session</h1>
+    <form method="POST">
+        <label for="session_name">Session Name:</label>
+        <input type="text" id="session_name" name="session_name" required>
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required>
+
+        <div id="exercises">
+            <div class="exercise">
+                <label for="exercise_1">Exercise:</label>
+                <select id="exercise_1" name="exercise_1" required>
+                    <option value="" disabled selected>Select an exercise</option>
+                    {% for exercise in exercises %}
+                        <option value="{{ exercise.exercise_name }}">{{ exercise.exercise_name }}</option>
+                    {% endfor %}
+                </select>
+                <div class="sets">
+                    <!-- Sets will be added here -->
+                </div>
+                <button type="button" class="add_set">Add Set</button>
+                <button type="button" class="delete_exercise">Delete Exercise</button>
+            </div>
+        </div>
+
+        <button type="button" id="add_exercise">Add Exercise</button>
+        <button type="submit" id="submit_session_button">Submit</button>
+    </form>
+
+    <script>
+        let exerciseCount = 1;
+
+        function createExerciseDropdown() {
+            exerciseCount++;
+            return `
+                <div class="exercise">
+                    <label for="exercise_${exerciseCount}">Exercise:</label>
+                    <select id="exercise_${exerciseCount}" name="exercise_${exerciseCount}" required>
+                        ${$('#exercise_1').html()}
+                    </select>
+                    <div class="sets"></div>
+                    <button type="button" class="add_set">Add Set</button>
+                    <button type="button" class="delete_exercise">Delete Exercise</button>
+                </div>
+            `;
+        }
+
+        $(document).on('click', '#add_exercise', function() {
+            $('#exercises').append(createExerciseDropdown());
+        });
+
+        $(document).on('click', '.add_set', function() {
+            const exerciseDiv = $(this).closest('.exercise');
+            const exerciseId = exerciseDiv.find('select').attr('id').split('_')[1];
+            const setCount = exerciseDiv.find('.set').length + 1;
+
+            exerciseDiv.find('.sets').append(`
+                <div class="set">
+                    <label for="weight_${exerciseId}_${setCount}">Weight:</label>
+                    <input type="number" name="weight_${exerciseId}_${setCount}" required>
+                    <label for="reps_${exerciseId}_${setCount}">Reps:</label>
+                    <input type="number" name="reps_${exerciseId}_${setCount}" required>
+                    <button type="button" class="delete_set">Delete Set</button>
+                </div>
+            `);
+        });
+
+        $(document).on('click', '.delete_exercise', function() {
+            $(this).closest('.exercise').remove();
+        });
+
+        $(document).on('click', '.delete_set', function() {
+            $(this).closest('.set').remove();
+        });
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Session</title>
+</head>
+<body>
+    <h1>Add Session</h1>
+    <form method="POST">
+        <label for="session_name">Session Name:</label>
+        <input type="text" id="session_name" name="session_name" required>
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required>
+
+        <div id="exercises">
+            <div class="exercise">
+                <label for="exercise_1">Exercise:</label>
+                <select id="exercise_1" name="exercise_1" required>
+                    <option value="" disabled selected>Select an exercise</option>
+                    {% for exercise in exercises %}
+                        <option value="{{ exercise.exercise_name }}">{{ exercise.exercise_name }}</option>
+                    {% endfor %}
+                </select>
+                <div class="sets">
+                    <label for="weight_1_1">Weight:</label>
+                    <input type="number" id="weight_1_1" name="weight_1_1" required>
+                    <label for="reps_1_1">Reps:</label>
+                    <input type="number" id="reps_1_1" name="reps_1_1" required>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

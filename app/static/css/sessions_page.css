@@ -1,0 +1,200 @@
+/* General reset and base styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #121212; /* Dark background */
+    color: #e0e0e0; /* Light text for contrast */
+}
+
+/* Container for the sessions page */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Logo container */
+.logo-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    max-width: 150px;
+    margin-bottom: 10px;
+}
+
+/* Navigation bar */
+.navbar {
+    width: 100%;
+    background-color: #1c1c1c;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    margin-bottom: 20px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: #e0e0e0;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #888;
+}
+
+/* Sessions container */
+.sessions-container {
+    width: 100%;
+    max-width: 800px;
+}
+
+.form-button {
+    background-color: #444;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.form-button:hover {
+    background-color: #555;
+}
+
+.sessions-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.sessions-table th,
+.sessions-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+/* Popup Container */
+.popup-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.popup-content {
+    background-color: #1c1c1c;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    width: 500px;
+    position: relative;
+}
+
+.popup-content label {
+    display: block;
+    margin-top: 15px;
+    color: #e0e0e0;
+}
+
+.add-exercise-button,
+.submit-button {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.set {
+    margin-top: 15px;
+}
+
+.exercise {
+    padding: 15px;
+    border: 1px solid #333;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.add_set,
+.delete_exercise,
+.delete_set {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.add_set:hover,
+.delete_exercise:hover,
+.delete_set:hover {
+    background-color: #555;
+}
+
+/* Close Button Styles */
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #444;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px;
+    z-index: 11; /* Ensure it is on top of other content in the pop-up */
+}
+
+.close-button:hover {
+    background-color: #555;
+}
+
+/* Search Results Styles */
+#search_results {
+    list-style: none;
+    padding: 0;
+    margin: 5px 0 0 0;
+    border: 1px solid #333;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #1c1c1c;
+    position: absolute;
+    width: 90%;
+    border-radius: 5px;
+    z-index: 20;
+}
+
+#search_results li {
+    padding: 10px;
+    cursor: pointer;
+    color: #e0e0e0;
+    border-bottom: 1px solid #333;
+}
+
+#search_results li:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+#search_results li:last-child {
+    border-bottom: none;
+}

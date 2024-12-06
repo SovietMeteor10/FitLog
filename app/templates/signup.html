@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - FitLog</title>
+    <link rel="stylesheet" href="/static/css/auth_page.css"> <!-- Link to CSS file -->
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2>Sign Up to FitLog</h2>
+            <p>Your Journey Measured</p>
+            <form id="signup-form" method="POST">
+                <div class="form-group">
+                    <label for="first_name">First Name</label>
+                    <input type="text" id="first_name" name="first_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="family_name">Family Name</label>
+                    <input type="text" id="family_name" name="family_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email_address">Email address</label>
+                    <input type="email_address" id="email_address" name="email_address" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="form-button">Sign Up</button>
+            </form>
+            <div id="message" class="message" style="display: none;"></div>
+            <div class="signin-link">
+                Have an account? <a href="/">Sign In</a>
+            </div>
+            <!-- Terms and Conditions Button -->
+            <a href="/terms" class="terms-button">Terms and Conditions</a>
+        </div>
+        <div class="image-container">
+            <img src="/static/images/fitlog_logo.jpg" alt="FitLog Logo" class="full-logo">
+        </div>
+    </div>
+    <script src="/static/js/signup.js"></script> <!-- Link to the JavaScript file -->
+</body>
+</html>
