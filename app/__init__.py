@@ -38,13 +38,10 @@ def create_app():
     # Fetch exercises from API after app context is ready
     with app.app_context():
         try:
-            from app.utils.fetch_exercise import (
-                fetch_and_store_exercises,
-            )  # Delay import
             from app.database import SessionLocal
 
             db_session = SessionLocal()
-            fetch_and_store_exercises()
+            # fetch_and_store_exercises()
             db_session.close()
         except Exception as e:
             print(f"Error fetching exercises: {e}")
