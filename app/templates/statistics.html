@@ -10,12 +10,6 @@
 </head>
 <body>
     <div class="container stats-page">
-        <!-- Sidebar Section -->
-        <div class="sidebar">
-            <div class="logo-container">
-                <h1>FITLOG</h1>
-            </div>
-        </div>
 
         <!-- Main Content Section -->
         <div class="content">
@@ -24,7 +18,7 @@
                 <div class="nav-links">
                     <a href="/index">Home</a>
                     <a href="/sessions">Sessions</a>
-                    <a href="/improvements">Improvements</a>
+                    <a href="/improvement">Improvements</a>
                     <a href="/profile">Profile</a>
                 </div>
                 <a href="/logout" class="logout-link">Logout</a> <!-- Logout button to the far right -->
@@ -34,10 +28,10 @@
             <div class="dashboard_container">
                 <!-- Top Section -->
                 <div class="top-section">
-                    <!-- Radial Graph (Top Left) -->
+
+                    <!-- Line Graph (Top Right) -->
                     <div class="graph-container">
-                        <h2>Muscle Group Distribution</h2>
-                        {{ radial_graph|safe }}
+                        <h2>Recent Sessions</h2>
                     </div>
                     
                     <!-- Line Graph (Top Right) -->
@@ -45,11 +39,22 @@
                         <h2>Performance Trend</h2>
                         {{ line_graph|safe }}
                     </div>
+
+                    <!-- Radial Graph (Top Left) -->
+                    <div class="graph-container">
+                        <h2>Muscle Group Distribution</h2>
+                        {{ radial_graph|safe }}
+                    </div>
                 </div>
                 
                 <!-- Bottom Section - Heat Map -->
                 <div class="bottom-section">
-                    <h2>Activity Heatmap</h2>
+                    <div class="text-row">
+                        <h2>Activity Heatmap</h2>
+                        <h2>
+                            <span class="green-square"></span> = Active
+                        </h2>
+                    </div>
                     {{ heatmap|safe }}
                 </div>
             </div>
