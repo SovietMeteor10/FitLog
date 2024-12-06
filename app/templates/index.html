@@ -28,7 +28,7 @@
         </div>
     </div>
     <div class="welcome-container">
-        <div class="welcome-message">Welcome [USER] to Fitlog!</div>
+        <div class="welcome-message">Welcome to Fitlog, {{ session.get('user_first_name', 'USER') }}!</div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {

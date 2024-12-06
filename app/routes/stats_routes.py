@@ -2,12 +2,13 @@ from flask import Blueprint, render_template
 import pandas as pd
 import plotly.graph_objects as go
 import numpy as np
-
+from app.routes.main_routes import login_required
 
 stats_bp = Blueprint('statistics', __name__)
 
 
 @stats_bp.route('/', methods=['GET'])
+@login_required
 def statistics():
     line_graph_html = line_graph()
     heatmap_html = heat_map()

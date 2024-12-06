@@ -5,6 +5,7 @@ from app.utils.youtube_api import search_youtube_videos
 from app.utils.write_to_db import write_session_to_db
 from app.database import db_session
 import datetime
+from app.routes.main_routes import login_required
 
 
 session_bp = Blueprint('sessions', __name__)
@@ -12,6 +13,7 @@ session_bp = Blueprint('sessions', __name__)
 
 # List Sessions
 @session_bp.route('/', methods=['GET', 'POST'])
+@login_required
 def handle_sessions():
     if request.method == 'POST':
         session_data = {
