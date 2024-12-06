@@ -93,21 +93,3 @@ def recommend_videos():
     videos = search_youtube_videos(most_logged_category)
 
     return jsonify({"category": most_logged_category, "videos": videos})
-
-
-@session_bp.route("/recommend_videos_by_goal", methods=["GET"])
-def recommend_videos_by_goal():
-    """
-    Recommend YouTube videos based on user's fitness goal.
-    """
-    user_id = request.args.get("user_id")  # Use session or token to identify user
-    if not user_id:
-        return jsonify({"error": "User ID is required"}), 400
-
-    # Fetch the user's goal
-    user = User.query.get(user_id)
-    if not user or not user.goal:
-        return jsonify({"error": "User goal not found"}), 404
-
-    videos = search_youtube_videos(user.goal)
-    return jsonify({"goal": user.goal, "videos": videos})

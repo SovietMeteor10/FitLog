@@ -56,16 +56,3 @@ def register():
         return redirect(url_for('main.login'))
 
     return render_template('signup.html')
-
-
-
-@main_bp.route('/stats')
-def stats():
-    stats_data = {
-        "recent_stats": [
-            {"date": "2024-12-01", "calories": 300},
-            {"date": "2024-12-02", "calories": 250},
-        ],
-        "recommended_videos": ["Video 1", "Video 2", "Video 3", "Video 4"],
-    }
-    return render_template('stats.html', stats=stats_data, recommended_videos=stats_data["recommended_videos"])

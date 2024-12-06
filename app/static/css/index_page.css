@@ -1,108 +1,93 @@
-/* General reset and base styles */
-body, html {
+body {
     margin: 0;
-    padding: 0;
-    height: 100%;
     font-family: Arial, sans-serif;
-    background-color: #121212; /* Dark background */
-    color: #e0e0e0; /* Light text for contrast */
-}
-
-/* Main container for the page layout */
-.container.main-page {
-    display: flex;
+    background-color: #121212;
+    color: #e0e0e0;
     height: 100vh;
     overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 2px;
 }
 
-/* Sidebar styles */
-.sidebar {
-    width: 300px;
-    background-color: #1c1c1c;
-    padding: 20px;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+.quarter {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-}
-
-.logo-container {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.logo {
-    max-width: 150px;
-    margin-bottom: 10px;
-}
-
-/* Saved Videos Section */
-.saved-videos {
-    margin-bottom: 20px;
-}
-
-.saved-videos h3 {
-    color: #e0e0e0;
-    margin-bottom: 10px;
-}
-
-.video-box {
-    margin-bottom: 10px;
-    color: #e0e0e0;
-}
-
-/* Main content styles */
-.content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background-color: #222;
-    padding: 20px;
-    overflow-y: auto;
-}
-
-/* Navigation bar styles */
-.navbar {
-    display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #333;
-    margin-bottom: 20px;
+    border: 3px;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s ease;
 }
 
-.nav-links {
+.quarter:hover {
+    background-color: #1f1f1f;
+}
+
+.label-container {
     display: flex;
-    gap: 100px; /* Increase spacing between links */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }
 
-.nav-links a,
-.logout-button a {
+.label {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    z-index: 10;
+}
+
+.ball {
+    position: absolute;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.welcome-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    animation: fadeOut 3s forwards;
+  }
+
+  .welcome-message {
+    background-color: #121212;
     color: #e0e0e0;
-    text-decoration: none; /* Remove underline from links */
-    transition: color 0.3s;
-    font-size: 1em;
-}
+    padding: 2rem;
+    border-radius: 8px;
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+  }
 
-.nav-links a:hover,
-.logout-button a:hover {
-    color: #888; /* Hover effect for links */
-}
+  .welcome-container.show {
+    opacity: 1;
+    visibility: visible;
+    animation: fadeIn 3s forwards;
+  }
 
-/* Stats section styles */
-.stats-section {
-    background-color: #1c1c1c;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-.stats-section h2 {
-    margin-bottom: 10px;
-    color: #e0e0e0;
-}
-
-.stats-section p {
-    color: #b0b0b0;
-}
-
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+      visibility: visible;
+    }
+  }

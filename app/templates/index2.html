@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page - FitLog</title>
+    <link rel="stylesheet" href="/static/css/index_page.css"> <!-- Link to CSS file for consistency -->
+</head>
+<body>
+    <div class="container main-page">
+        <!-- Sidebar Section -->
+        <div class="sidebar">
+            <div class="logo-container">
+                <h1>FITLOG</h1>
+            </div>
+
+            <!-- Saved Videos Section -->
+            <div class="saved-videos">
+                <h3>Saved Videos</h3>
+                <div id="video-1" class="video-box">
+                    <p>No video pinned</p> <!-- Placeholder content -->
+                </div>
+                <div id="video-2" class="video-box">
+                    <p>No video pinned</p> <!-- Placeholder content -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Section -->
+        <div class="content">
+            <!-- Navigation Bar -->
+            <div class="navbar">
+                <div class="nav-links">
+                    <a href="/sessions">Sessions</a>
+                    <a href="/statistics">Statistics</a>
+                    <a href="/improvement">Improvement</a>
+                    <a href="/profile">Profile</a>
+                </div>
+                <!-- Logout button in the top-right -->
+                <div class="logout-button">
+                    <a href="/logout" class="form-button logout-link">Logout</a>
+                </div>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="stats-section">
+                <h2>Stats</h2>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/index.js"></script> <!-- Link to JavaScript file -->
+</body>
+</html>

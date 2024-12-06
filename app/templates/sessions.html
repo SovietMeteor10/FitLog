@@ -12,7 +12,6 @@
 <body>
     <div class="container">
         <div class="logo-container">
-            <img src="/static/images/fitlog_logo.jpg" alt="FitLog Logo" class="logo">
             <h1>FITLOG</h1>
         </div>
 
@@ -21,6 +20,7 @@
             <div class="nav-links">
                 <a href="/index">Main</a>
                 <a href="/statistics">Statistics</a>
+                <a href="/improvement">Improvement</a>
                 <a href="/profile">Profile</a>
             </div>
         </div>
@@ -42,8 +42,8 @@
                      <td>{{ session.date }}</td>
                     <td>{{ session.session_name }}</td>
                 </tr>
-    {% endfor %}
-</tbody>
+                    {% endfor %}
+                </tbody>
             </table>
         </div>
     </div>
