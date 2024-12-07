@@ -45,6 +45,7 @@
                             <form method="POST" onsubmit="return confirm('Are you sure you want to delete this session?');">
                                 <input type="hidden" name="delete" value="true">
                                 <input type="hidden" name="session_id" value="{{ session.id }}">
+                                <button type="button" class="session-edit-button">Edit</button>
                                 <button type="submit" class="session-delete-button">Delete</button>
                             </form>
                         </td>
@@ -83,6 +84,39 @@
                 <button type="button" id="add_exercise" class="form-button add-exercise-button">Add Exercise</button>
                 <button type="submit" class="form-button submit-button">Submit</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Edit Session Pop-Up -->
+    <div id="edit-session-popup" class="popup-container" style="display: none;">
+        <div class="popup-content">
+            <button id="close-popup" class="close-button">X</button>
+            <h3 class="popup-title">**Session Name**</h3>
+            <div class="popup-subtitle">Session details to be fetched from the database</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="column-header">Exercise</th>
+                        <th class="column-header">Sets</th>
+                        <th class="column-header">Reps</th>
+                        <th class="column-header">Weight (kg)</th>
+                        <th class="column-header"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for exercise in session %}
+                    <tr>
+                        <td><input class="text-edit" type="text" name="exercise" value="Bicep Curls"></td>
+                        <td><input class="value-edit" type="number" name="sets" value="4"></td>
+                        <td><input class="value-edit" type="number" name="reps" value="8"></td>
+                        <td><input class="value-edit" type="number" name="weight" value="10"></td>
+                        <td>
+                            <button type="button" class="session-delete-button" onclick="deleteRow(this)">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 

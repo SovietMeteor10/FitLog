@@ -116,38 +116,25 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+$(document).ready(function() {
+    // Add click event listener to the "Edit" buttons
+    $('.session-edit-button').click(function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        showEditSessionPopup();
+    });
 
-    /*// Submit session handler
-    document.getElementById("new-session-form").addEventListener("submit", function (event) {
-        event.preventDefault(); // Prevent default form submission
+    // Add click event listener to the close button
+    $('.close-button').click(function() {
+        $('#edit-session-popup').hide();
+    });
+});
 
-        // Placeholder for backend logic to save session data
-        // Send session data to backend API for storage here
+function showEditSessionPopup() {
+    // Show the popup
+    $('#edit-session-popup').css('display', 'flex'); // Use flex to center the popup
+}
 
-        // Create new session entry for the table
-        const sessionName = document.getElementById("session_name").value;
-        const sessionDate = document.getElementById("date").value;
-        const newRow = document.createElement("tr");
-
-        // Add tooltip with exercise details
-        let tooltip = `Session: ${sessionName}\nDate: ${sessionDate}\nExercises:\n`;
-        document.querySelectorAll(".exercise").forEach(exercise => {
-            const exerciseName = exercise.querySelector("input[type='text']").value;
-            tooltip += `  - ${exerciseName}\n`;
-            exercise.querySelectorAll(".set").forEach(set => {
-                const weight = set.querySelector("input[name^='weight']").value;
-                const reps = set.querySelector("input[name^='reps']").value;
-                tooltip += `      Set: Weight: ${weight} kg, Reps: ${reps}\n`;
-            });
-        });
-
-        newRow.innerHTML = `
-            <td>${sessionDate}</td>
-            <td title="${tooltip}">${sessionName}</td>
-            <td>Duration Placeholder</td> <!-- Placeholder for duration -->
-        `;
-        sessionsList.appendChild(newRow);
-
-        // Close the pop-up
-        newSessionPopup.style.display = "none";
-    });*/
+function deleteRow(button) {
+    const row = button.closest('tr'); // Find the closest table row
+    row.remove(); // Remove the row from the table
+}

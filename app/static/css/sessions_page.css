@@ -209,3 +209,28 @@ body, html {
     padding: 5px;
     border-radius: 5px;
 }
+
+.session-edit-button {
+    background-color: #333;
+    color: #e0e0e0;
+    border: #1c1c1c;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.text-edit {
+    width: 120px;
+}
+
+.value-edit {
+    width:80px;
+}
+
+.column-header {
+    width: 130px;
+}
+
+.popop-subtitle {
+    font-size: 20px;
+    margin-bottom: 50px;
+}
