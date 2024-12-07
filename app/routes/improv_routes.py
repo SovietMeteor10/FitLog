@@ -93,7 +93,7 @@ def improv():
         # Fetch YouTube videos related to the most logged exercise
         videos = search_youtube_videos(exercise_name) if exercise_name else []
         videos = videos[:4]  # Ensure only 4 videos are displayed
-        print("Video data being passed ",videos)
+        #print("Video data being passed ",videos)
         
         # Fetch saved videos for the sidebar
         saved_videos = db_session.query(SavedVideo).filter_by(user_id=user_id).all()
