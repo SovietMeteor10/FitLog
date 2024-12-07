@@ -1,11 +1,10 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from flask_login import LoginManager
+from app.database import db_session
 
 # Initialize Flask extensions
-db = SQLAlchemy()
 bcrypt = Bcrypt()
 jwt = JWTManager()
 login_manager = LoginManager()
@@ -18,7 +17,6 @@ def create_app():
     app.config.from_object("app.config.Config")  # Load app configuration
 
     # Initialize extensions
-    db.init_app(app)
     bcrypt.init_app(app)
     jwt.init_app(app)
     login_manager.init_app(app)
@@ -38,12 +36,13 @@ def create_app():
     # Fetch exercises from API after app context is ready
     with app.app_context():
         try:
-            from app.database import SessionLocal
-
-            db_session = SessionLocal()
+            pass
             # fetch_and_store_exercises()
-            db_session.close()
         except Exception as e:
             print(f"Error fetching exercises: {e}")
+
+    @app.teardown_appcontext
+    def shutdown_session(exception=None):
+        db_session.remove()
 
     return app

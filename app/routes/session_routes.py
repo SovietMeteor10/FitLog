@@ -1,9 +1,9 @@
 from flask import Blueprint, jsonify, render_template, request, session
 from app.models import Session, Exercise, SessionExercise
-from app import db
 from app.utils.youtube_api import search_youtube_videos
 from app.utils.write_to_db import write_session_to_db
 from app.database import db_session
+from sqlalchemy import func, desc
 import datetime
 from app.routes.main_routes import login_required
 
@@ -92,12 +92,12 @@ def recommend_videos():
 
     # Aggregate user's most logged exercises
     exercises = (
-        db_session.query(Exercise.name, db.func.count(Exercise.id).label("count"))
+        db_session.query(Exercise.name, func.count(Exercise.id).label("count"))
         .join(SessionExercise, SessionExercise.exercise_id == Exercise.id)
         .join(Session, Session.id == SessionExercise.session_id)
         .filter(Session.user_id == user_id)  # Filter by user
         .group_by(Exercise.name)
-        .order_by(db.desc("count"))
+        .order_by(desc("count"))
         .first()
     )
 

@@ -1,7 +1,9 @@
 import requests
 
+
 YOUTUBE_API_KEY = "AIzaSyB0DWNypHqqZoKOuNzuLDo39Tm22zJzMg8"
 YOUTUBE_API_URL = "https://www.googleapis.com/youtube/v3/search"
+
 
 def search_youtube_videos(query):
     try:
