@@ -8,7 +8,7 @@ import datetime
 improv_bp = Blueprint("improvement", __name__)
 
 
-@improv_bp.route("/", methods=["GET","POST"])
+@improv_bp.route("/", methods=["GET", "POST"])
 def improv():
     try:
         # Get the logged-in user's ID
@@ -31,8 +31,7 @@ def improv():
                 print(f"❌ Video ID is missing or invalid. Received: {video_id}")
                 return jsonify(success=False, message="Video ID is missing.")
 
-            print(f"✅ Received video data - ID: {video_id}, Title: {title}, URL: {url}, Thumbnail: {thumbnail}") 
-
+            print(f"✅ Received video data - ID: {video_id}, Title: {title}, URL: {url}, Thumbnail: {thumbnail}")
 
             # Check if the video is already saved
             existing_video = db_session.query(SavedVideo).filter_by(
@@ -93,19 +92,19 @@ def improv():
         # Fetch YouTube videos related to the most logged exercise
         videos = search_youtube_videos(exercise_name) if exercise_name else []
         videos = videos[:4]  # Ensure only 4 videos are displayed
-        #print("Video data being passed ",videos)
-        
+        # print("Video data being passed ",videos)
+
         # Fetch saved videos for the sidebar
         saved_videos = db_session.query(SavedVideo).filter_by(user_id=user_id).all()
         saved_video_list = [
-            {'title': video.title, 'url': video.url, 'thumbnail': video.thumbnail} 
+            {'title': video.title, 'url': video.url, 'thumbnail': video.thumbnail}
             for video in saved_videos
         ]
 
         return render_template(
-            "improvement.html", 
-            videos=videos, 
-            exercise_name=exercise_name, 
+            "improvement.html",
+            videos=videos,
+            exercise_name=exercise_name,
             saved_videos=saved_video_list
         )
 
