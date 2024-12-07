@@ -30,6 +30,9 @@
     <div class="welcome-container">
         <div class="welcome-message">Welcome to Fitlog, {{ session.get('user_first_name', 'USER') }}!</div>
     </div>
+    <div class="logout-container">
+        <a href="/logout" class="logout-link">Logout</a> <!-- Logout button to the far right -->
+    </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const ballCount = 500; // Increased ball count
