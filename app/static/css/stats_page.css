@@ -116,6 +116,13 @@ body {
     margin-bottom: 15px;
 }
 
+.data-entry-field {
+    font-size: 20px;
+    margin-bottom: 15px;
+    text-decoration: underline;
+
+}
+
 .h2 {
     font-size: 24px;
 }
