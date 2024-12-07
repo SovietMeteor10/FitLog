@@ -13,44 +13,6 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
-}
-
-/* Logo container */
-.logo-container {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.logo {
-    max-width: 150px;
-    margin-bottom: 10px;
-}
-
-/* Navigation bar */
-.navbar {
-    width: 100%;
-    background-color: #1c1c1c;
-    padding: 10px 20px;
-    display: flex;
-    justify-content: center;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-    margin-bottom: 20px;
-}
-
-.nav-links {
-    display: flex;
-    gap: 20px;
-}
-
-.nav-links a {
-    color: #e0e0e0;
-    text-decoration: none;
-    transition: color 0.3s;
-}
-
-.nav-links a:hover {
-    color: #888;
 }
 
 /* Sessions container */
@@ -81,9 +43,20 @@ body, html {
 
 .sessions-table th,
 .sessions-table td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #333;
+    padding: 8px; /* Add padding for readability */
+    border-bottom: 1px solid #ddd; /* Add a border for clarity */
+    text-align: left; /* Default alignment */
+}
+
+.sessions-table th:first-child,
+.sessions-table td:first-child {
+    width: 100px; /* Limit the width of the first column */
+}
+
+.sessions-table th:last-child,
+.sessions-table td:last-child {
+    width: 100px; /* Limit the width of the last column */
+    text-align: right; /* Right-align content in the last column */
 }
 
 /* Popup Container */
@@ -197,4 +170,42 @@ body, html {
 
 #search_results li:last-child {
     border-bottom: none;
+}
+
+/* Navigation bar styling */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin-bottom: 10px;
+    background-color: #1c1c1c;
+    align-items: center;
+    border-bottom: 1px solid #333;
+    width: calc(100% - 40px);
+}
+
+.nav-links {
+    display: flex;
+    gap: 100px; /* Increase spacing between links */
+}
+
+.nav-links a {
+    color: #e0e0e0;
+    text-decoration: none; /* Remove underline from links */
+    font-size: 1em;
+}
+
+.logout-link {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding-right:10px;
+}
+
+.session-delete-button {
+    background-color: #333;
+    color: #e0e0e0;
+    border: #1c1c1c;
+    padding: 5px;
+    border-radius: 5px;
 }

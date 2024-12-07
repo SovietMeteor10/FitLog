@@ -11,10 +11,6 @@
 
 <body>
     <div class="container">
-        <div class="logo-container">
-            <h1>FITLOG</h1>
-        </div>
-
         <!-- Navigation Bar -->
         <div class="navbar">
             <div class="nav-links">
@@ -23,26 +19,30 @@
                 <a href="/improvement">Improvement</a>
                 <a href="/profile">Profile</a>
             </div>
+            <a href="/logout" class="logout-link">Logout</a> <!-- Logout button to the far right -->
         </div>
 
         <div class="sessions-container">
             <h2>Your Sessions</h2>
             <button id="add-new-session" class="form-button">Add New Session</button>
-
+        
             <table class="sessions-table">
                 <thead>
                     <tr>
                         <th>Date</th>
                         <th>Session</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody id="sessions-list">
-
-                {% for session in sessions %}
-                <tr>
-                     <td>{{ session.date }}</td>
-                    <td>{{ session.session_name }}</td>
-                </tr>
+                    {% for session in sessions %}
+                    <tr>
+                        <td>{{ session.date }}</td>
+                        <td>{{ session.session_name }}</td>
+                        <td class>
+                            <button class="session-delete-button" data-session-id="{{ session.id }}">Delete</button>
+                        </td> <!-- Add a new table cell with a button -->
+                    </tr>
                     {% endfor %}
                 </tbody>
             </table>
