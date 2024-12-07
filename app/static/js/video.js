@@ -1,42 +1,69 @@
-// Function to save a video into the "Saved Videos" section
-function saveVideo(videoId, videoTitle, videoUrl) {
-    const savedVideosContainer = document.querySelector('.saved-videos');
-    const existingSlots = savedVideosContainer.querySelectorAll('.video-box');
+document.addEventListener('DOMContentLoaded', function () {
+    loadSavedVideos(); // Load saved videos on page load
+});
 
-    // Check if the limit of 10 saved videos is reached
-    if (existingSlots.length >= 10) {
-        alert("The maximum of 10 saved videos has been reached. Remove a video to save more.");
-        return;
-    }
+function saveVideo(button) {
+    const videoId = button.getAttribute('data-video-id');
+    const title = button.getAttribute('data-title');
+    const url = button.getAttribute('data-url');
+    const thumbnail = button.getAttribute('data-thumbnail');
 
-    // Create a new video slot
-    const videoSlot = document.createElement('div');
-    videoSlot.className = 'video-box';
+    console.log("Button data attributes:", {
+        video_id: videoId,
+        title: title,
+        url: url,
+        thumbnail: thumbnail
+    });
 
-    // Create the video link
-    const videoLink = document.createElement('a');
-    videoLink.href = videoUrl;
-    videoLink.target = '_blank';
-    videoLink.innerText = videoTitle;
-
-    // Create the remove button
-    const removeButton = document.createElement('button');
-    removeButton.className = 'remove-button';
-    removeButton.innerText = 'Remove';
-    removeButton.onclick = () => removeVideo(videoSlot);
-
-    // Append the link and the button to the new slot
-    videoSlot.appendChild(videoLink);
-    videoSlot.appendChild(removeButton);
-
-    // Add the new video slot to the saved videos container
-    savedVideosContainer.appendChild(videoSlot);
-
-    alert(`Video "${videoTitle}" has been saved!`);
+    fetch('/improvement', {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify({
+            video_id: videoId,
+            title: title,
+            url: url,
+            thumbnail: thumbnail
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Video saved successfully!');
+            loadSavedVideos();
+        } else {
+            alert('Failed to save video: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while saving the video.');
+    });
 }
 
-// Function to remove a video from the "Saved Videos" section
-function removeVideo(videoSlot) {
-    videoSlot.remove();
-    alert("Video has been removed.");
+
+
+
+function loadSavedVideos() {
+    fetch('/improvement')
+    .then(response => response.text())
+    .then(html => {
+        // Create a temporary container to parse the HTML response
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        
+        // Extract the saved videos section
+        const savedVideos = doc.querySelectorAll('.saved-videos .video-box');
+
+        // Clear the current saved videos section
+        const savedVideosContainer = document.querySelector('.saved-videos');
+        savedVideosContainer.innerHTML = '<h3>Saved Videos</h3>';
+        
+        // Append the extracted saved videos to the saved videos section
+        savedVideos.forEach(video => {
+            savedVideosContainer.appendChild(video);
+        });
+    })
+    .catch(error => console.error('Error loading saved videos:', error));
 }

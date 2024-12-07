@@ -1,7 +1,8 @@
 from sqlalchemy import Column, Integer, String
-from sqlalchemy import Float, Boolean, Date, ForeignKey, Text
+from sqlalchemy import Float, Boolean, Date, ForeignKey, Text, DateTime
 from sqlalchemy.orm import relationship
 from app.database import Base
+import datetime
 
 
 class User(Base):
@@ -79,3 +80,17 @@ class Set(Base):
     set_number = Column(Integer)
 
     session_exercise = relationship("SessionExercise", back_populates="sets")
+
+
+class SavedVideo(Base):
+    __tablename__ = "saved_videos"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey("users.user_id"), nullable=False)
+    video_id = Column(String, nullable=False)
+    title = Column(String, nullable=False)
+    url = Column(String, nullable=False)
+    thumbnail = Column(String, nullable=True)
+    saved_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+    user = relationship("User", backref="saved_videos")

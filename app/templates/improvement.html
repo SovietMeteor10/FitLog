@@ -17,7 +17,15 @@
             <!-- Saved Videos Section -->
             <div class="saved-videos">
                 <h3>Saved Videos</h3>
-                <!-- Initially empty -->
+
+                {% for video in saved_videos %}
+                <div class="video-box">
+                    <a href="{{ video['url'] }}" target="_blank">
+                        <img src="{{ video['thumbnail'] }}" alt="{{ video['title'] }}">
+                    </a>
+                    <div class="video-title">{{ video['title'] }}</div>
+                </div>
+                {% endfor %}
             </div>
         </div>
 
@@ -48,18 +56,86 @@
                 {% for video in videos %}
                 <div class="video-item">
                     <a href="{{ video['url'] }}" target="_blank">
-                        <img src="https://img.youtube.com/vi/{{ video['video_id'] }}/hqdefault.jpg" alt="YouTube Video">
+                        <img 
+                            src="{{ video['thumbnail'] }}" 
+                            alt="{{ video['title'] }}" 
+                            onerror="this.onerror=null; this.src='/static/images/placeholder.jpg';"
+                        >
                     </a>
                     <div class="video-title">{{ video['title'] }}</div>
-                    <button class="save-button"
-                            data-video-id="{{ video['video_id'] }}"
-                            data-title="{{ video['title'] }}"
-                            data-url="{{ video['url'] }}">
-                        Save Video
+                    <button 
+                    class="save-button" 
+                    data-video-id="{{ video['id'] }}"
+                    data-title="{{ video['title'] }}"
+                    data-url="{{ video['url'] }}"
+                    data-thumbnail="{{ video['thumbnail'] }}"
+                    onclick="saveVideo(this)"
+                    >
+                    Save Video
                     </button>
                 </div>
                 {% endfor %}
             </div>
+
+            <script>
+                function saveVideo(videoId, title, url, thumbnail) {
+                    fetch('/improvement/url', {
+                        method: 'POST',
+                        headers: { 
+                            'Content-Type': 'application/json' 
+                        },
+                        body: JSON.stringify({
+                            video_id: videoId,
+                            title: title,
+                            url: url,
+                            thumbnail: thumbnail
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Video saved successfully!');
+                            // Reload saved videos on the sidebar
+                            loadSavedVideos();
+                        } else {
+                            alert('Failed to save video: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while saving the video.');
+                    });
+                }
+
+                function loadSavedVideos() {
+                    fetch('/improvement/get_saved_videos')
+                    .then(response => response.json())
+                    .then(data => {
+                        const savedVideosContainer = document.querySelector('.saved-videos');
+                        savedVideosContainer.innerHTML = '<h3>Saved Videos</h3>';
+
+                        data.videos.forEach(video => {
+                            const videoElement = document.createElement('div');
+                            videoElement.classList.add('video-item');
+                            
+                            videoElement.innerHTML = `
+                                <a href="${video.url}" target="_blank">
+                                    <img src="${video.thumbnail}" alt="${video.title}">
+                                </a>
+                                <div class="video-title">${video.title}</div>
+                            `;
+
+                            savedVideosContainer.appendChild(videoElement);
+                        });
+                    })
+                    .catch(error => console.error('Error:', error));
+                }
+
+
+                // Load saved videos on page load
+                window.onload = loadSavedVideos;
+            </script>
+
 
             <!-- Fallback if no videos are found -->
             {% if not videos %}
