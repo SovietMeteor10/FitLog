@@ -16,32 +16,39 @@ session_bp = Blueprint('sessions', __name__)
 @login_required
 def handle_sessions():
     if request.method == 'POST':
-        session_data = {
-            'Name': request.form.get('session_name'),
-            'Date': datetime.datetime.strptime(
-                request.form.get('date'),
-                '%Y-%m-%d'
-            ),
-            'Duration': request.form.get('duration'),
-            'Exercises': {}
-        }
-        exercise_inputs = [k for k in request.form.keys()
-                           if k.startswith('exercise_')]
-        for exercise_input in exercise_inputs:
-            exercise_id = exercise_input.split('_')[1]
-            exercise_name = request.form.get(f'exercise_{exercise_id}')
-            session_data['Exercises'][exercise_name] = []
-            set_count = 1
-            while True:
-                weight = request.form.get(f'weight_{exercise_id}_{set_count}')
-                reps = request.form.get(f'reps_{exercise_id}_{set_count}')
-                if not weight or not reps:
-                    break
-                session_data['Exercises'][exercise_name].append((
-                    float(weight), int(reps)
-                ))
-                set_count += 1
-        write_session_to_db(session_data, user_id=session.get("user_id"))
+        if 'delete' in request.form:
+            # Handle session deletion
+            session_id = request.form.get('session_id')
+            session_to_delete = Session.query.get(session_id)
+            db_session.delete(session_to_delete)
+            db_session.commit()
+        else:
+            session_data = {
+                'Name': request.form.get('session_name'),
+                'Date': datetime.datetime.strptime(
+                    request.form.get('date'),
+                    '%Y-%m-%d'
+                ),
+                'Duration': request.form.get('duration'),
+                'Exercises': {}
+            }
+            exercise_inputs = [k for k in request.form.keys()
+                               if k.startswith('exercise_')]
+            for exercise_input in exercise_inputs:
+                exercise_id = exercise_input.split('_')[1]
+                exercise_name = request.form.get(f'exercise_{exercise_id}')
+                session_data['Exercises'][exercise_name] = []
+                set_count = 1
+                while True:
+                    weight = request.form.get(f'weight_{exercise_id}_{set_count}')
+                    reps = request.form.get(f'reps_{exercise_id}_{set_count}')
+                    if not weight or not reps:
+                        break
+                    session_data['Exercises'][exercise_name].append((
+                        float(weight), int(reps)
+                    ))
+                    set_count += 1
+            write_session_to_db(session_data, user_id=session.get("user_id"))
 
     elif request.method == 'GET' and 'q' in request.args:
         # Handle the exercise search functionality
@@ -60,7 +67,7 @@ def handle_sessions():
     try:
         sessions = Session.query.all()
         session_data = [
-            {"date": s.date, "session_name": s.session_name, "duration": s.duration}
+            {"id": s.session_id, "date": s.date, "session_name": s.session_name, "duration": s.duration}
             for s in sessions
             if s.user_id == session.get("user_id")
         ]

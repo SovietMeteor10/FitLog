@@ -41,9 +41,13 @@
                         <td>{{ session.date }}</td>
                         <td>{{ session.session_name }}</td>
                         <td>{{ session.duration }}</td>
-                        <td class>
-                            <button class="session-delete-button" data-session-id="{{ session.id }}">Delete</button>
-                        </td> <!-- Add a new table cell with a button -->
+                        <td>
+                            <form method="POST" onsubmit="return confirm('Are you sure you want to delete this session?');">
+                                <input type="hidden" name="delete" value="true">
+                                <input type="hidden" name="session_id" value="{{ session.id }}">
+                                <button type="submit" class="session-delete-button">Delete</button>
+                            </form>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
