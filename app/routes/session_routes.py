@@ -22,6 +22,7 @@ def handle_sessions():
                 request.form.get('date'),
                 '%Y-%m-%d'
             ),
+            'Duration': request.form.get('duration'),
             'Exercises': {}
         }
         exercise_inputs = [k for k in request.form.keys()
@@ -59,7 +60,7 @@ def handle_sessions():
     try:
         sessions = Session.query.all()
         session_data = [
-            {"date": s.date, "session_name": s.session_name}
+            {"date": s.date, "session_name": s.session_name, "duration": s.duration}
             for s in sessions
             if s.user_id == session.get("user_id")
         ]

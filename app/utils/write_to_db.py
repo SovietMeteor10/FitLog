@@ -6,7 +6,8 @@ def write_session_to_db(session_data, user_id=1):
     new_session = Session(
         user_id=user_id,
         session_name=session_data['Name'],
-        date=session_data['Date']
+        date=session_data['Date'],
+        duration=session_data['Duration']
     )
     db_session.add(new_session)
     db_session.commit()

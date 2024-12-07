@@ -35,11 +35,13 @@ class Session(Base):
     user_id = Column(Integer, ForeignKey("users.user_id"))
     session_name = Column(String)
     date = Column(Date)
+    duration = Column(Float)
 
-    def __init__(self, user_id, session_name, date):
+    def __init__(self, user_id, session_name, date, duration):
         self.user_id = user_id
         self.session_name = session_name
         self.date = date
+        self.duration = duration
 
     user = relationship("User", back_populates="sessions")
     session_exercises = relationship("SessionExercise", back_populates="session", cascade="all, delete-orphan")
