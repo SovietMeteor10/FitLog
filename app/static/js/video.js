@@ -54,7 +54,7 @@ function saveVideo(button) {
 }
 
 /**
- * Function to remove a video from the saved video list and update the sidebar.
+ * Function to remove a video from the saved video list.
  * @param {HTMLElement} button - The button that triggered the remove action.
  */
 function removeVideo(button) {
