@@ -15,6 +15,7 @@ def improv():
         # Get the logged-in user's ID
         user_id = session.get("user_id")
         if not user_id:
+            print(f"User ID: {user_id}")
             flash("Please log in to access improvement suggestions.", "warning")
             return redirect("/login")  # Redirect to login if no user is logged in
 
