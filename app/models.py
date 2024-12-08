@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, JSON
 from sqlalchemy import Float, Boolean, Date, ForeignKey, Text, DateTime
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql.functions import func
 from app.database import Base
 import datetime
 
@@ -96,3 +97,12 @@ class SavedVideo(Base):
     saved_at = Column(DateTime, default=datetime.datetime.utcnow)
 
     user = relationship("User", backref="saved_videos")
+
+class CachedVideo(Base):
+    __tablename__ = "cached_videos"
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, nullable=False)
+    exercise_name = Column(String, nullable=False)
+    video_data = Column(JSON, nullable=False)  # Store video data as JSON
+    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
