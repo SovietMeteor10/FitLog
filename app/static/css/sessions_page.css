@@ -232,5 +232,17 @@ body, html {
 
 .popop-subtitle {
     font-size: 20px;
-    margin-bottom: 50px;
+    margin-bottom: 10px;
+}
+
+#session-exercises th.column-header,
+#session-exercises td {
+    text-align: left;
+    padding: 8px;
+    border: 1px solid #e0e0e0;
+    
+}
+
+.popup-edit-table {
+    margin-top: 30px;
 }

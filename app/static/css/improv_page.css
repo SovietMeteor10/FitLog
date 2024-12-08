@@ -129,7 +129,7 @@ body, html {
 
 .nav-links a:hover,
 .logout-button a:hover {
-    color: #00ff99; /* Subtle green highlight */
+    color: #e0e0e0; /* Subtle green highlight */
 }
 
 /* Video Section */

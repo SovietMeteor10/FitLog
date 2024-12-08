@@ -114,11 +114,11 @@ button {
 }
 
 .form-button:hover {
-    background-color: #e0e0e0;
+    background-color: rgb(10, 168, 10);
 }
 
 .delete-button {
-    background-color: #1c1c1c;
+    background-color: #ccc;
 }
 
 .delete-button:hover {
