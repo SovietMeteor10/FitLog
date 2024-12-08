@@ -117,21 +117,52 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 $(document).ready(function() {
-    // Add click event listener to the "Edit" buttons
-    $('.session-edit-button').click(function(event) {
-        event.preventDefault(); // Prevent the default form submission
-        showEditSessionPopup();
+    // Add click event listener to the "Details" buttons
+    $('.session-details-button').click(function(event) {
+        event.preventDefault();
+        const sessionId = $(this).closest('form').find('input[name="session_id"]').val();
+        showSessionDetailsPopup(sessionId);
     });
 
     // Add click event listener to the close button
-    $('.close-button').click(function() {
-        $('#edit-session-popup').hide();
+    $('#close-details-popup').click(function() {
+        $('#session-details-popup').hide();
     });
 });
 
-function showEditSessionPopup() {
-    // Show the popup
-    $('#edit-session-popup').css('display', 'flex'); // Use flex to center the popup
+function showSessionDetailsPopup(sessionId) {
+    // Fetch session details from the server
+    $.ajax({
+        url: `/sessions/${sessionId}`,
+        type: 'GET',
+        success: function(response) {
+            // Populate the popup with session details
+            $('#session-name').text(response.name);
+            $('#session-info').text(`Date: ${response.date}, Duration: ${response.duration} minutes`);
+
+            const tbody = $('#session-exercises tbody');
+            tbody.empty();
+
+            response.exercises.forEach((exercise, exerciseIndex) => {
+                exercise.sets.forEach((set, setIndex) => {
+                    const row = $('<tr></tr>');
+                    if (setIndex === 0) {
+                        row.append($('<td></td>').text(exercise.name).attr('rowspan', exercise.sets.length));
+                    }
+                    row.append($('<td></td>').text(setIndex + 1));
+                    row.append($('<td></td>').text(set.reps));
+                    row.append($('<td></td>').text(set.weight));
+                    tbody.append(row);
+                });
+            });
+
+            // Show the popup
+            $('#session-details-popup').css('display', 'flex');
+        },
+        error: function() {
+            alert('Error fetching session details');
+        }
+    });
 }
 
 function deleteRow(button) {

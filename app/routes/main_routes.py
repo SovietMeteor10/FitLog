@@ -22,6 +22,7 @@ def login():
         password = request.form['password']
         error = None
         user = User.query.filter_by(email_address=email_address).first()
+
         if user is None:
             error = 'Invalid email address.'
         elif not check_password_hash(user.password, password):  # Make this secure
@@ -31,9 +32,10 @@ def login():
             session.clear()
             session['user_id'] = user.user_id
             session['user_first_name'] = user.first_name
+            flash('Login successful!', 'success')
             return redirect(url_for('main.index'))
 
-        flash(error)
+        flash(error, 'error')
 
     return render_template('login.html')
 

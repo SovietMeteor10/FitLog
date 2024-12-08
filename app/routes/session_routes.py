@@ -77,6 +77,33 @@ def handle_sessions():
         return "An error occurred while fetching sessions", 500
 
 
+@session_bp.route('/<int:session_id>', methods=['GET'])
+@login_required
+def get_session_details(session_id):
+    fetched_session = Session.query.get(session_id)
+    if fetched_session and fetched_session.user_id == session.get("user_id"):
+        session_data = {
+            "id": fetched_session.session_id,
+            "name": fetched_session.session_name,
+            "date": fetched_session.date.strftime('%Y-%m-%d'),
+            "duration": fetched_session.duration,
+            "exercises": []
+        }
+        for session_exercise in fetched_session.session_exercises:
+            exercise_data = {
+                "name": session_exercise.exercise.exercise_name,
+                "sets": []
+            }
+            for set in session_exercise.sets:
+                exercise_data["sets"].append({
+                    "reps": set.reps,
+                    "weight": set.weight
+                })
+            session_data["exercises"].append(exercise_data)
+        return jsonify(session_data)
+    return jsonify({"error": "Session not found"}), 404
+
+
 # Retrieve Exercises
 @session_bp.route('/get_exercises', methods=['GET'])
 def get_exercises():

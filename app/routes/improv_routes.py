@@ -5,7 +5,9 @@ from sqlalchemy import func
 from app.models import Exercise, SessionExercise, CachedVideo, Session, SavedVideo
 import datetime
 
+
 improv_bp = Blueprint("improvement", __name__)
+
 
 @improv_bp.route("/", methods=["GET", "POST"])
 def improv():
@@ -103,12 +105,12 @@ def improv():
             session_ids = (
                 db_session.query(Session.session_id)
                 .filter(
-                    Session.date.between(start_date, end_date), 
+                    Session.date.between(start_date, end_date),
                     Session.user_id == user_id
                 )
                 .all()
             )
-            
+
             # Extract session IDs into a list
             session_ids = [s[0] for s in session_ids]  # Unpack the tuples
 
@@ -153,12 +155,12 @@ def improv():
         # Fetch saved videos for the sidebar
         saved_videos = db_session.query(SavedVideo).filter_by(user_id=user_id).all()
         saved_video_list = [
-            {'title': video.title, 'url': video.url, 'thumbnail': video.thumbnail, 'video_id': video.video_id} 
+            {'title': video.title, 'url': video.url, 'thumbnail': video.thumbnail, 'video_id': video.video_id}
             for video in saved_videos
         ]
 
         return render_template(
-            "improvement.html", 
+            "improvement.html",
             videos=video_data,  # Pass the video data
             exercise_name=exercise_name,  # Pass the exercise name
             saved_videos=saved_video_list

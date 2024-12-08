@@ -45,7 +45,7 @@
                             <form method="POST" onsubmit="return confirm('Are you sure you want to delete this session?');">
                                 <input type="hidden" name="delete" value="true">
                                 <input type="hidden" name="session_id" value="{{ session.id }}">
-                                <button type="button" class="session-edit-button">Edit</button>
+                                <button type="button" class="session-details-button">Details</button>
                                 <button type="submit" class="session-delete-button">Delete</button>
                             </form>
                         </td>
@@ -87,34 +87,23 @@
         </div>
     </div>
 
-    <!-- Edit Session Pop-Up -->
-    <div id="edit-session-popup" class="popup-container" style="display: none;">
+    <!-- Session Details Pop-Up -->
+    <div id="session-details-popup" class="popup-container" style="display: none;">
         <div class="popup-content">
-            <button id="close-popup" class="close-button">X</button>
-            <h3 class="popup-title">**Session Name**</h3>
-            <div class="popup-subtitle">Session details to be fetched from the database</div>
-            <table>
+            <button id="close-details-popup" class="close-button">X</button>
+            <h3 id="session-name" class="popup-title"></h3>
+            <div id="session-info" class="popup-subtitle"></div>
+            <table id="session-exercises">
                 <thead>
                     <tr>
                         <th class="column-header">Exercise</th>
-                        <th class="column-header">Sets</th>
+                        <th class="column-header">Set</th>
                         <th class="column-header">Reps</th>
                         <th class="column-header">Weight (kg)</th>
-                        <th class="column-header"></th>
-                    </tr>
+                 </tr>
                 </thead>
                 <tbody>
-                    {% for exercise in session %}
-                    <tr>
-                        <td><input class="text-edit" type="text" name="exercise" value="Bicep Curls"></td>
-                        <td><input class="value-edit" type="number" name="sets" value="4"></td>
-                        <td><input class="value-edit" type="number" name="reps" value="8"></td>
-                        <td><input class="value-edit" type="number" name="weight" value="10"></td>
-                        <td>
-                            <button type="button" class="session-delete-button" onclick="deleteRow(this)">Delete</button>
-                        </td>
-                    </tr>
-                    {% endfor %}
+                <!-- Exercise details will be dynamically added here -->
                 </tbody>
             </table>
         </div>

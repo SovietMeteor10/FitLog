@@ -98,6 +98,7 @@ class SavedVideo(Base):
 
     user = relationship("User", backref="saved_videos")
 
+
 class CachedVideo(Base):
     __tablename__ = "cached_videos"
 
