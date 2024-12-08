@@ -26,7 +26,9 @@ class User(Base):
         self.email_address = email_address
         self.password = password
 
-    sessions = relationship("Session", back_populates="user", cascade="all, delete-orphan")
+    sessions = relationship(
+        "Session", back_populates="user", cascade="all, delete-orphan"
+    )
 
 
 class Session(Base):
@@ -45,7 +47,9 @@ class Session(Base):
         self.duration = duration
 
     user = relationship("User", back_populates="sessions")
-    session_exercises = relationship("SessionExercise", back_populates="session", cascade="all, delete-orphan")
+    session_exercises = relationship(
+        "SessionExercise", back_populates="session", cascade="all, delete-orphan"
+    )
 
 
 class Exercise(Base):
@@ -68,7 +72,9 @@ class SessionExercise(Base):
 
     session = relationship("Session", back_populates="session_exercises")
     exercise = relationship("Exercise", back_populates="session_exercises")
-    sets = relationship("Set", back_populates="session_exercise", cascade="all, delete-orphan")
+    sets = relationship(
+        "Set", back_populates="session_exercise", cascade="all, delete-orphan"
+    )
 
 
 class Set(Base):
