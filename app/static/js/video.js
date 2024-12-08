@@ -1,3 +1,4 @@
+// Wait until the page content is fully loaded
 document.addEventListener('DOMContentLoaded', function () {
     loadSavedVideos(); // Load saved videos on page load
 });
@@ -12,43 +13,37 @@ function saveVideo(button) {
     const url = button.getAttribute('data-url');
     const thumbnail = button.getAttribute('data-thumbnail');
 
-    console.log("🔥 [DEBUG] Initiating save video request with:", {
+    console.log("Button data attributes for save:", {
         video_id: videoId,
         title: title,
         url: url,
         thumbnail: thumbnail
     });
 
-    fetch('/improvement/save_video', {
+    fetch('/improvement', {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json' 
         },
         body: JSON.stringify({
+            action: 'save_video', // ✅ Action for saving the video
             video_id: videoId,
             title: title,
             url: url,
             thumbnail: thumbnail
         })
     })
-    .then(response => {
-        console.log("📩 [DEBUG] Response received from server:", response);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        console.log("📩 [DEBUG] Parsed JSON response:", data);
         if (data.success) {
             alert('Video saved successfully!');
-            loadSavedVideos(); // Reload saved videos after saving
+            loadSavedVideos(); // ✅ Reload saved videos on success
         } else {
             alert('Failed to save video: ' + data.message);
         }
     })
     .catch(error => {
-        console.error("❌ [ERROR] Save video request failed:", error);
+        console.error('Error while saving video:', error);
         alert('An error occurred while saving the video.');
     });
 }
@@ -60,35 +55,29 @@ function saveVideo(button) {
 function removeVideo(button) {
     const videoId = button.getAttribute('data-video-id');
 
-    console.log("🔥 [DEBUG] Initiating remove video request with:", { video_id: videoId });
+    console.log("Removing video with ID:", videoId);
 
-    fetch('/improvement/remove_video', {
+    fetch('/improvement', {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json' 
         },
         body: JSON.stringify({
+            action: 'remove_video', // ✅ Action for removing the video
             video_id: videoId
         })
     })
-    .then(response => {
-        console.log("📩 [DEBUG] Response received from server:", response);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        console.log("📩 [DEBUG] Parsed JSON response:", data);
         if (data.success) {
             alert('Video removed successfully!');
-            loadSavedVideos(); // Reload saved videos after removal
+            loadSavedVideos(); // ✅ Reload saved videos on success
         } else {
             alert('Failed to remove video: ' + data.message);
         }
     })
     .catch(error => {
-        console.error("❌ [ERROR] Remove video request failed:", error);
+        console.error('Error while removing video:', error);
         alert('An error occurred while removing the video.');
     });
 }
@@ -100,28 +89,21 @@ function loadSavedVideos() {
     fetch('/improvement')
     .then(response => response.text())
     .then(html => {
+        // Create a temporary container to parse the HTML response
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
+        
+        // Extract the saved videos section
         const savedVideos = doc.querySelectorAll('.saved-videos .video-box');
 
+        // Clear the current saved videos section
         const savedVideosContainer = document.querySelector('.saved-videos');
         savedVideosContainer.innerHTML = '<h3>Saved Videos</h3>';
-
+        
+        // Append the extracted saved videos to the saved videos section
         savedVideos.forEach(video => {
-            // Add a "Remove" button to each video box
-            const removeButton = document.createElement('button');
-            removeButton.textContent = 'Remove';
-            removeButton.classList.add('remove-button');
-            removeButton.setAttribute('data-video-id', video.getAttribute('data-video-id'));
-            removeButton.onclick = function() {
-                removeVideo(removeButton);
-            };
-
-            video.appendChild(removeButton);
             savedVideosContainer.appendChild(video);
         });
     })
-    .catch(error => {
-        console.error("❌ [ERROR] Error while loading saved videos:", error);
-    });
+    .catch(error => console.error('Error while loading saved videos:', error));
 }
