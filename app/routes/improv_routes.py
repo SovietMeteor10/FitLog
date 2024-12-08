@@ -13,7 +13,7 @@ def improv():
         # Get the logged-in user's ID
         user_id = session.get("user_id")
         if not user_id:
-            print(f"🔥 [DEBUG] User not logged in!")
+            print("🔥 [DEBUG] User not logged in!")
             flash("Please log in to access improvement suggestions.", "warning")
             return redirect("/login")  # Redirect to login if no user is logged in
 
@@ -30,11 +30,11 @@ def improv():
         ).first()
 
         if cached_videos:
-            print(f"✅ [DEBUG] Using cached videos for user {user_id}")
+            print("✅ [DEBUG] Using cached videos for user {user_id}")
             video_data = cached_videos.video_data  # Use the cached video data
             exercise_name = cached_videos.exercise_name  # Get the exercise name from the cache
         else:
-            print(f"🆕 [DEBUG] No cached videos for user {user_id}. Querying YouTube API...")
+            print("🆕 [DEBUG] No cached videos for user {user_id}. Querying YouTube API...")
 
             session_ids = (
                 db_session.query(Session.session_id)
@@ -77,9 +77,9 @@ def improv():
                     )
                     db_session.add(new_cache)
                     db_session.commit()
-                    print(f"✅ [DEBUG] Cached new videos for user {user_id}")
+                    print("✅ [DEBUG] Cached new videos for user {user_id}")
                 except Exception as e:
-                    print(f"❌ [ERROR] Error fetching YouTube videos: {e}")
+                    print("❌ [ERROR] Error fetching YouTube videos: {e}")
                     video_data = []
 
         saved_videos = db_session.query(SavedVideo).filter_by(user_id=user_id).all()
@@ -96,7 +96,7 @@ def improv():
         )
 
     except Exception as e:
-        print(f"❌ [ERROR] Error in improvement route: {e}")
+        print("❌ [ERROR] Error in improvement route: {e}")
         flash("An error occurred while fetching improvement suggestions.", "danger")
         return redirect("/sessions")
 
@@ -109,11 +109,11 @@ def save_video():
     try:
         user_id = session.get("user_id")
         if not user_id:
-            print(f"🔥 [DEBUG] User not logged in!")
+            print("🔥 [DEBUG] User not logged in!")
             return jsonify(success=False, message="User not logged in."), 401
 
         data = request.get_json()
-        print(f"🔥 [DEBUG] Raw POST data: {data}")
+        print("🔥 [DEBUG] Raw POST data: {data}")
 
         video_id = str(data.get('video_id', '')).strip()
         title = str(data.get('title', '')).strip()
@@ -121,23 +121,23 @@ def save_video():
         thumbnail = str(data.get('thumbnail', '')).strip()
 
         if not video_id or not title or not url or not thumbnail:
-            print(f"❌ [ERROR] Video data is missing or incomplete: {data}")
+            print("❌ [ERROR] Video data is missing or incomplete: {data}")
             return jsonify(success=False, message="Video data is missing or incomplete.")
 
         existing_video = db_session.query(SavedVideo).filter_by(user_id=user_id, video_id=video_id).first()
 
         if existing_video:
-            print(f"⚠️ [DEBUG] Video already saved: {video_id}")
+            print("⚠️ [DEBUG] Video already saved: {video_id}")
             return jsonify(success=False, message="Video already saved.")
 
         new_video = SavedVideo(user_id=user_id, video_id=video_id, title=title, url=url, thumbnail=thumbnail)
         db_session.add(new_video)
         db_session.commit()
-        print(f"✅ [DEBUG] Video saved successfully: {video_id}")
+        print("✅ [DEBUG] Video saved successfully: {video_id}")
         return jsonify(success=True, message="Video saved successfully!")
 
     except Exception as e:
-        print(f"❌ [ERROR] Exception while saving video: {e}")
+        print("❌ [ERROR] Exception while saving video: {e}")
         return jsonify(success=False, message="An error occurred while saving the video."), 500
 
     finally:
@@ -149,16 +149,16 @@ def remove_video():
     try:
         user_id = session.get("user_id")
         if not user_id:
-            print(f"🔥 [DEBUG] User not logged in!")
+            print("🔥 [DEBUG] User not logged in!")
             return jsonify(success=False, message="User not logged in."), 401
 
         data = request.get_json()
-        print(f"🔥 [DEBUG] Raw POST data: {data}")
+        print("🔥 [DEBUG] Raw POST data: {data}")
 
         video_id = str(data.get('video_id', '')).strip()
 
         if not video_id:
-            print(f"❌ [ERROR] Video ID is missing from request: {data}")
+            print("❌ [ERROR] Video ID is missing from request: {data}")
             return jsonify(success=False, message="Video ID is missing.")
 
         video_to_delete = db_session.query(SavedVideo).filter_by(user_id=user_id, video_id=video_id).first()
@@ -166,14 +166,14 @@ def remove_video():
         if video_to_delete:
             db_session.delete(video_to_delete)
             db_session.commit()
-            print(f"✅ [DEBUG] Video removed successfully: {video_id}")
+            print("✅ [DEBUG] Video removed successfully: {video_id}")
             return jsonify(success=True, message="Video removed successfully!")
         else:
-            print(f"❌ [ERROR] Video not found for removal: {video_id}")
+            print("❌ [ERROR] Video not found for removal: {video_id}")
             return jsonify(success=False, message="Video not found for removal.")
 
     except Exception as e:
-        print(f"❌ [ERROR] Exception while removing video: {e}")
+        print("❌ [ERROR] Exception while removing video: {e}")
         return jsonify(success=False, message="An error occurred while removing the video."), 500
 
     finally:
