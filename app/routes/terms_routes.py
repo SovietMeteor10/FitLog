@@ -7,5 +7,6 @@ terms_bp = Blueprint('terms', __name__)
 
 @terms_bp.route('/', methods=['GET', 'POST'])
 #@login_required
+#Fixed it
 def profile():
     return render_template('terms.html')
