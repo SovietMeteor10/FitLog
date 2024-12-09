@@ -86,11 +86,15 @@ FitLog/
 │   │   └── forms.py
 │   ├── models.py            # SQLAlchemy ORM models
 ├── tests/                   # Test suite
-│   ├── test_db_connection.py
-│   └── ...                  # Add additional test files here
+│   ├── test_routes.py       # Unit tests for route handlers
+│   ├── test_models.py       # Unit tests for models
+│   ├── test_utilities.py    # Unit tests for utilities
+│   └── test_db_connection.py # Verifies database connectivity
 ├── requirements.txt         # Python dependencies
+├── pytest.ini               # Pytest configuration
 ├── wsgi.py                  # WSGI entry point
-└── README.md                # Project documentation
+├── README.md                # Project documentation
+└── .env.example             # Example environment variables
 ```
 
 ---
@@ -120,6 +124,20 @@ FitLog/
    pytest
    ```
 
+### **Pytest Configuration**
+- The `pytest.ini` file in the root directory includes configurations for running tests:
+  ```ini
+  [pytest]
+  testpaths = tests
+  addopts = --disable-warnings
+  ```
+- This ensures tests are discovered in the `tests/` directory and warnings are suppressed for cleaner output.
+
+### **Test Coverage**
+- **Routes**: Login, logout, profile management, video management, and terms page rendering.
+- **Models**: User creation, session creation, cascading deletions, and video saving.
+- **Utilities**: Database initialization, form validation, and configuration loading.
+
 ---
 
 ## **Contributing**
@@ -145,4 +163,3 @@ This project is licensed under the MIT License. See `LICENSE` for more informati
 
 ## **Contact**
 For questions or support, reach out to [your-email@example.com].
-

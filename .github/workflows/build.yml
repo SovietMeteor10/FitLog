@@ -18,25 +18,28 @@ jobs:
         run: pip install flake8
 
       - name: Run flake8
-        run: flake8 . --ignore E501
+        run: flake8 . --ignore E501,W503,E203 --exclude .venv
 
-  builds:
-    needs: python-formatting
+  tests:
+    needs: python-formatting  # Run tests after formatting checks
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.12'
 
-      - name: Install requirements
+      - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Run pytest
+        run: pytest
+
   deploy-to-impaas:
-    needs: python-formatting
+    needs: [python-formatting, tests]  # Deployment only after tests pass
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -48,3 +51,4 @@ jobs:
           app-name: fitlog
           deployment-token: ${{ secrets.IMPAAS_DEPLOY_TOKEN }}
           method: PLATFORM
+
