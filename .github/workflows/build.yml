@@ -18,7 +18,8 @@ jobs:
         run: pip install flake8
 
       - name: Run flake8
-        run: flake8 . --ignore E501
+        run: |
+          flake8 . --ignore E501,W503,E203 --exclude .venv
 
   tests:
     needs: python-formatting  # Run tests after formatting checks
@@ -51,3 +52,4 @@ jobs:
           app-name: fitlog
           deployment-token: ${{ secrets.IMPAAS_DEPLOY_TOKEN }}
           method: PLATFORM
+

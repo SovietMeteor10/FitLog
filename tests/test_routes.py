@@ -40,26 +40,29 @@ def setup_test_data():
     db_session.commit()
 
 
-
 def test_login_failure(test_client):
-    response = test_client.post("/", data={
-        "email_address": "wronguser@example.com",
-        "password": "wrong_password",
-    })
+    response = test_client.post(
+        "/",
+        data={
+            "email_address": "wronguser@example.com",
+            "password": "wrong_password",
+        },
+    )
 
     assert response.status_code == 200
     assert b"Invalid email address." in response.data
 
 
 def test_profile_delete(test_client):
-    test_client.post("/", data={
-        "email_address": "testuser@example.com",
-        "password": "correct_password",
-    })
+    test_client.post(
+        "/",
+        data={
+            "email_address": "testuser@example.com",
+            "password": "correct_password",
+        },
+    )
 
     response = test_client.post("/profile/", data={"_method": "DELETE"})
 
     assert response.status_code == 302
     assert b"Sign Up" in test_client.get("/").data
-
-
