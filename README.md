@@ -88,7 +88,6 @@ FitLog/
 ├── tests/                   # Test suite
 │   ├── test_routes.py       # Unit tests for route handlers
 │   ├── test_models.py       # Unit tests for models
-│   ├── test_utilities.py    # Unit tests for utilities
 │   └── test_db_connection.py # Verifies database connectivity
 ├── requirements.txt         # Python dependencies
 ├── pytest.ini               # Pytest configuration
