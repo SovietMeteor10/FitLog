@@ -121,7 +121,7 @@ button {
     background-color: #ccc;
 }
 
-.delete-button:hover {
+.delete-button:hover { 
     background-color: #c0392b;
 }
 
