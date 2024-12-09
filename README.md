@@ -132,11 +132,6 @@ FitLog/
   ```
 - This ensures tests are discovered in the `tests/` directory and warnings are suppressed for cleaner output.
 
-### **Test Coverage**
-- **Routes**: Login, logout, profile management, video management, and terms page rendering.
-- **Models**: User creation, session creation, cascading deletions, and video saving.
-- **Utilities**: Database initialization, form validation, and configuration loading.
-
 ---
 
 ## **Contributing**
